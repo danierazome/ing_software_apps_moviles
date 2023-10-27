@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Vinilos</string>
+    <string name="greeting_login">Bienvenido a Vinilos</string>
+    <string name="greeting_visitant">Bienvenido Visitante</string>
+</resources>
