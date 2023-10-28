@@ -8,15 +8,15 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.vinilos.ui.enumIU.BottomBarOption
+import com.example.vinilos.ui.enumIU.VinylsScreen
 
 @Composable
 fun BottomBar(selectedItem: String, modifier: Modifier = Modifier, onSelect: (String) -> Unit = {}) {
 
     NavigationBar {
-        BottomBarOption.values().forEach { item ->
+        VinylsScreen.values().filter { it.inBar }.forEach { item ->
             NavigationBarItem(
-                icon = { Icon(Icons.Filled.Favorite, contentDescription = item.name) },
+                icon = { Icon(item.icon, contentDescription = item.name) },
                 label = { Text(item.name) },
                 selected = selectedItem == item.name,
                 onClick = {onSelect(item.name)}

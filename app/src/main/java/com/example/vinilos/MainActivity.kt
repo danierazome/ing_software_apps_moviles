@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.vinilos.ui.screen.VinylsApp
+import com.example.vinilos.ui.screen.VinylApp
 import com.example.vinilos.ui.theme.VinilosTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    VinylsApp()
+                    VinylApp()
                 }
             }
         }
