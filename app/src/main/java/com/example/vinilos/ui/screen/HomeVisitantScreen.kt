@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -37,6 +38,7 @@ import com.example.vinilos.ui.viewmodel.MusicianUIState
 import com.example.vinilos.ui.viewmodel.MusicianViewModel
 
 @Composable
+@Preview
 fun HomeVisitant( modifier: Modifier = Modifier) {
     val albumViewModel: AlbumViewModel =
         viewModel(factory = AlbumViewModel.Factory)

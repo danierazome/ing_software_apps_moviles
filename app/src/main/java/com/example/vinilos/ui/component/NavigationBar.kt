@@ -8,6 +8,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.vinilos.ui.enumIU.VinylsScreen
 
 @Composable
@@ -23,4 +24,9 @@ fun BottomBar(selectedItem: String, modifier: Modifier = Modifier, onSelect: (St
             )
         }
     }
+}
+@Preview
+@Composable
+fun PreviewBottomBar(){
+    BottomBar("Home")
 }
