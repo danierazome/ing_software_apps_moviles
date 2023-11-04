@@ -5,4 +5,11 @@
     <string name="login_header">¡Bienvenido a Vinilos!\nLa app de los melómanos</string>
     <string name="login_collector">SOY UN COLECCIONISTA</string>
     <string name="login_visitor">SOY UN VISITANTE</string>
+
+    <dimen name="padding_small_int">16</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="image_small_size">100dp</dimen>
+    <dimen name="rounded_small_radius">25</dimen>
+    <dimen name="text_image_width">25</dimen>
 </resources>
