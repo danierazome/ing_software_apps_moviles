@@ -2,4 +2,12 @@
     <string name="app_name">Vinilos</string>
     <string name="greeting_login">Bienvenido a Vinilos</string>
     <string name="greeting_visitant">Bienvenido Visitante</string>
+
+    <dimen name="padding_small_int">16</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="image_small_size">100dp</dimen>
+    <dimen name="rounded_small_radius">25</dimen>
+    <dimen name="text_image_width">25</dimen>
+
 </resources>
