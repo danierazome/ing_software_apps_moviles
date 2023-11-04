@@ -2,4 +2,7 @@
     <string name="app_name">Vinilos</string>
     <string name="greeting_login">Bienvenido a Vinilos</string>
     <string name="greeting_visitant">Bienvenido Visitante</string>
+    <string name="login_header">¡Bienvenido a Vinilos!\nLa app de los melómanos</string>
+    <string name="login_collector">SOY UN COLECCIONISTA</string>
+    <string name="login_visitor">SOY UN VISITANTE</string>
 </resources>
