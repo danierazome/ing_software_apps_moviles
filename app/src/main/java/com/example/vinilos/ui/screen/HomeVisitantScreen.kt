@@ -36,6 +36,7 @@ import com.example.vinilos.ui.component.BottomBarVisitor
 import com.example.vinilos.ui.component.CroppedImage
 import com.example.vinilos.ui.component.ErrorOnRetrieveData
 import com.example.vinilos.ui.component.LoadingData
+import com.example.vinilos.ui.component.TopBar
 import com.example.vinilos.ui.enumIU.VinylsScreen
 import com.example.vinilos.ui.viewmodel.AlbumUIState
 import com.example.vinilos.ui.viewmodel.AlbumViewModel
@@ -46,7 +47,10 @@ import com.example.vinilos.ui.viewmodel.MusicianViewModel
 
 @Composable
 @Preview
-fun HomeVisitant(navigateTo: (String) -> Unit = {}, modifier: Modifier = Modifier) {
+fun HomeVisitant(
+    navigateTo: (String) -> Unit = {},
+    navigateUp: () -> Unit = {},
+    modifier: Modifier = Modifier) {
     var bottomBarItemSelected by rememberSaveable { mutableStateOf(VinylsScreen.HomeVisitant.name) }
 
     val albumViewModel: AlbumViewModel =
@@ -59,6 +63,9 @@ fun HomeVisitant(navigateTo: (String) -> Unit = {}, modifier: Modifier = Modifie
         viewModel(factory = MusicianViewModel.Factory)
 
     Scaffold(
+        topBar = {
+                 TopBar(title = "¡Bienvenido Visitante!", navigateUp = navigateUp)
+        },
         bottomBar = {
             BottomBarVisitor(
                 selectedItem = bottomBarItemSelected,
@@ -99,19 +106,14 @@ fun HomeScreen(
 
     LazyColumn {
 
-        item {
-            Text(
-                modifier = Modifier.padding(vertical = 8.dp),
-                text = "¡Bienvenido visitante!",
-                style = MaterialTheme.typography.headlineSmall
-            )
-        }
+
 
         item {
             Image(
                 painter = painterResource(R.drawable.welcome_visitants),
                 contentDescription = null,
                 modifier = Modifier
+                    .padding(top = 50.dp)
                     .width(300.dp)
                     .height(200.dp)
             )

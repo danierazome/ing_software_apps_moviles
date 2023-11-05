@@ -25,11 +25,11 @@ fun VinylApp(navController: NavHostController = rememberNavController()) {
         }
 
         composable(route = VinylsScreen.HomeVisitant.name) {
-            HomeVisitant(navigateTo = {navController.navigate(it)})
+            HomeVisitant(navigateTo = {navController.navigate(it)}, navigateUp = {navController.navigateUp()})
         }
 
         composable(route = VinylsScreen.HomeCollector.name) {
-            HomeCollector(navigateTo = {navController.navigate(it)})
+            HomeCollector(navigateTo = {navController.navigate(it)}, navigateUp = {navController.navigateUp()})
         }
     }
 
