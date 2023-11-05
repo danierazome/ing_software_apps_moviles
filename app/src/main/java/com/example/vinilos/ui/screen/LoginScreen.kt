@@ -1,6 +1,5 @@
 package com.example.vinilos.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,14 +18,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vinilos.R
-import com.example.vinilos.ui.enumIU.CollectorsScreen
-import com.example.vinilos.ui.enumIU.UserType
 import com.example.vinilos.ui.enumIU.VinylsScreen
 
 @Composable
 fun Login(
     modifier: Modifier = Modifier,
-    updateUser: (String) -> Unit = {},
     navigateTo: (String) -> Unit = {}
 ) {
 
@@ -51,8 +47,7 @@ fun Login(
         Button(
             onClick =
             {
-                updateUser(UserType.Visitor.name)
-                navigateTo(VinylsScreen.Home.name)
+                navigateTo(VinylsScreen.HomeVisitant.name)
             },
             modifier = modifier
                 .align(Alignment.CenterHorizontally)
@@ -64,8 +59,7 @@ fun Login(
         Button(
             onClick =
             {
-                updateUser(UserType.Collector.name)
-                navigateTo(CollectorsScreen.Home.name)
+                navigateTo(VinylsScreen.HomeCollector.name)
             },
             modifier = modifier
                 .align(Alignment.CenterHorizontally)

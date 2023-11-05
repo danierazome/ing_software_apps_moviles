@@ -11,8 +11,13 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
@@ -27,9 +32,11 @@ import com.example.vinilos.model.Album
 import com.example.vinilos.model.Band
 import com.example.vinilos.model.Collector
 import com.example.vinilos.model.Musician
+import com.example.vinilos.ui.component.BottomBarCollector
 import com.example.vinilos.ui.component.CroppedImage
 import com.example.vinilos.ui.component.ErrorOnRetrieveData
 import com.example.vinilos.ui.component.LoadingData
+import com.example.vinilos.ui.enumIU.VinylsScreen
 import com.example.vinilos.ui.viewmodel.AlbumUIState
 import com.example.vinilos.ui.viewmodel.AlbumViewModel
 import com.example.vinilos.ui.viewmodel.BandUIState
@@ -41,7 +48,9 @@ import com.example.vinilos.ui.viewmodel.MusicianViewModel
 
 @Composable
 @Preview
-fun HomeCollector( modifier: Modifier = Modifier) {
+fun HomeCollector(navigateTo: (String) -> Unit = {}, modifier: Modifier = Modifier) {
+    var bottomBarItemSelected by rememberSaveable { mutableStateOf(VinylsScreen.HomeCollector.name) }
+
     val albumViewModel: AlbumViewModel =
         viewModel(factory = AlbumViewModel.Factory)
 
@@ -54,13 +63,32 @@ fun HomeCollector( modifier: Modifier = Modifier) {
     val banViewModel: BandViewModel =
         viewModel(factory = BandViewModel.Factory)
 
-    HomeScreenCollector(
-        albumsUiState = albumViewModel.albumsUiState,
-        collectorUIState = collectorViewModel.collectorUiState,
-        musicianUIState = musicianViewModel.musicianUIState,
-        bandUIState = banViewModel.bandUIState,
-        randomAvatar = {collectorViewModel.randomAvatar()}
-    )
+    Scaffold(
+
+        bottomBar = {
+            BottomBarCollector(
+                selectedItem = bottomBarItemSelected,
+                onSelect = {
+                    bottomBarItemSelected = it
+                }
+            )
+        }
+    ) { innerPadding ->
+
+        when (bottomBarItemSelected) {
+            VinylsScreen.AlbumsCollector.name -> Albums()
+            VinylsScreen.ArtistsCollector.name -> Collectors()
+            VinylsScreen.New.name -> NewArtist()
+            else -> HomeScreenCollector(
+                albumsUiState = albumViewModel.albumsUiState,
+                collectorUIState = collectorViewModel.collectorUiState,
+                musicianUIState = musicianViewModel.musicianUIState,
+                bandUIState = banViewModel.bandUIState,
+                randomAvatar = {collectorViewModel.randomAvatar()},
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
+    }
 }
 
 
@@ -269,7 +297,7 @@ fun BandCollectorComponente (
     modifier: Modifier = Modifier) {
 
     Column(
-        modifier = modifier
+        modifier = modifier.padding(bottom = 100.dp)
     ) {
         Text(
             modifier = Modifier.padding(bottom = 16.dp),

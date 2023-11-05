@@ -12,24 +12,31 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vinilos.R
 import com.example.vinilos.model.Album
 import com.example.vinilos.model.Collector
 import com.example.vinilos.model.Musician
+import com.example.vinilos.ui.component.BottomBarVisitor
 import com.example.vinilos.ui.component.CroppedImage
 import com.example.vinilos.ui.component.ErrorOnRetrieveData
 import com.example.vinilos.ui.component.LoadingData
+import com.example.vinilos.ui.enumIU.VinylsScreen
 import com.example.vinilos.ui.viewmodel.AlbumUIState
 import com.example.vinilos.ui.viewmodel.AlbumViewModel
 import com.example.vinilos.ui.viewmodel.CollectorUIState
@@ -39,7 +46,9 @@ import com.example.vinilos.ui.viewmodel.MusicianViewModel
 
 @Composable
 @Preview
-fun HomeVisitant( modifier: Modifier = Modifier) {
+fun HomeVisitant(navigateTo: (String) -> Unit = {}, modifier: Modifier = Modifier) {
+    var bottomBarItemSelected by rememberSaveable { mutableStateOf(VinylsScreen.HomeVisitant.name) }
+
     val albumViewModel: AlbumViewModel =
         viewModel(factory = AlbumViewModel.Factory)
 
@@ -49,12 +58,31 @@ fun HomeVisitant( modifier: Modifier = Modifier) {
     val musicianViewModel: MusicianViewModel =
         viewModel(factory = MusicianViewModel.Factory)
 
-    HomeScreen(
-        albumsUiState = albumViewModel.albumsUiState,
-        collectorUIState = collectorViewModel.collectorUiState,
-        musicianUIState = musicianViewModel.musicianUIState,
-        randomAvatar = {collectorViewModel.randomAvatar()}
-    )
+    Scaffold(
+        bottomBar = {
+            BottomBarVisitor(
+                selectedItem = bottomBarItemSelected,
+                onSelect = {
+                    bottomBarItemSelected = it;
+                }
+            )
+        }
+    ) { innerPadding ->
+        when (bottomBarItemSelected) {
+            VinylsScreen.AlbumsVisitant.name -> Albums()
+            VinylsScreen.CollectorsVisitant.name -> Collectors()
+            VinylsScreen.ArtistsVisitant.name -> Artists()
+            else -> HomeScreen(
+                albumsUiState = albumViewModel.albumsUiState,
+                collectorUIState = collectorViewModel.collectorUiState,
+                musicianUIState = musicianViewModel.musicianUIState,
+                randomAvatar = {collectorViewModel.randomAvatar()},
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
+    }
+
+
 }
 
 
@@ -83,7 +111,9 @@ fun HomeScreen(
             Image(
                 painter = painterResource(R.drawable.welcome_visitants),
                 contentDescription = null,
-                modifier = Modifier.width(300.dp).height(200.dp)
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(200.dp)
             )
         }
 
@@ -206,7 +236,7 @@ fun CollectorComponent(
     modifier: Modifier = Modifier) {
 
     Column (
-        modifier = modifier
+        modifier = modifier.padding(bottom = 100.dp)
     ){
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
