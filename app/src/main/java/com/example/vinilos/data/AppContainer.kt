@@ -1,6 +1,7 @@
 package com.example.vinilos.data
 
 import com.example.vinilos.network.AlbumApiService
+import com.example.vinilos.network.BandApiService
 import com.example.vinilos.network.CollectorApiService
 import com.example.vinilos.network.MusicianApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -8,12 +9,13 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
+import retrofit2.create
 
 interface AppContainer {
     val albumRepository: AlbumRepository
     val musicianRepository: MusicianRepository
     val collectorRepository: CollectorRepository
-
+    val bandRepository: BandRepository
 }
 
 class DefaultAppContainer: AppContainer {
@@ -57,4 +59,15 @@ class DefaultAppContainer: AppContainer {
     override val collectorRepository: CollectorRepository by lazy {
         NetworkCollectorRepository(retrofitCollectorService)
     }
+
+    //ALBUM
+
+    private val retrofitBandService: BandApiService by lazy {
+        retrofit.create(BandApiService::class.java)
+    }
+
+    override val bandRepository: BandRepository by lazy {
+        NetworkBandRepository(retrofitBandService)
+    }
+
 }
