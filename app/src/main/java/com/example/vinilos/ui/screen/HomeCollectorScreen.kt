@@ -36,6 +36,7 @@ import com.example.vinilos.ui.component.BottomBarCollector
 import com.example.vinilos.ui.component.CroppedImage
 import com.example.vinilos.ui.component.ErrorOnRetrieveData
 import com.example.vinilos.ui.component.LoadingData
+import com.example.vinilos.ui.component.TopBar
 import com.example.vinilos.ui.enumIU.VinylsScreen
 import com.example.vinilos.ui.viewmodel.AlbumUIState
 import com.example.vinilos.ui.viewmodel.AlbumViewModel
@@ -48,7 +49,11 @@ import com.example.vinilos.ui.viewmodel.MusicianViewModel
 
 @Composable
 @Preview
-fun HomeCollector(navigateTo: (String) -> Unit = {}, modifier: Modifier = Modifier) {
+fun HomeCollector(
+    navigateTo: (String) -> Unit = {},
+    navigateUp: () -> Unit = {},
+    modifier: Modifier = Modifier) {
+
     var bottomBarItemSelected by rememberSaveable { mutableStateOf(VinylsScreen.HomeCollector.name) }
 
     val albumViewModel: AlbumViewModel =
@@ -64,8 +69,11 @@ fun HomeCollector(navigateTo: (String) -> Unit = {}, modifier: Modifier = Modifi
         viewModel(factory = BandViewModel.Factory)
 
     Scaffold(
-
+        topBar = {
+            TopBar(title = "¡Bienvenido Coleccionista!", navigateUp = navigateUp)
+        },
         bottomBar = {
+
             BottomBarCollector(
                 selectedItem = bottomBarItemSelected,
                 onSelect = {
@@ -107,18 +115,11 @@ fun HomeScreenCollector(
     LazyColumn {
 
         item {
-            Text(
-                modifier = Modifier.padding(vertical = 8.dp),
-                text = "¡Bienvenido Coleccionista!",
-                style = MaterialTheme.typography.headlineSmall
-            )
-        }
-
-        item {
             Image(
                 painter = painterResource(R.drawable.welcome_collector),
                 contentDescription = null,
                 modifier = Modifier
+                    .padding(top = 50.dp)
                     .width(300.dp)
                     .height(200.dp)
             )
