@@ -291,7 +291,7 @@ fun CollectorsCarouselCollectionItem(collector: Collector, avatar: String, modif
     }
 }
 
-
+// ------------> BAND SECTION
 @Composable
 fun BandCollectorComponente (
     bands: List<Band>,
@@ -319,7 +319,7 @@ fun BandCarouselCollectorItem(band: Band, modifier: Modifier){
     val imageModifier = modifier
         .size(dimensionResource(R.dimen.image_small_size))
         .padding(dimensionResource(R.dimen.padding_small))
-        .clip(RoundedCornerShape(50.dp))
+        .clip(RoundedCornerShape(0.dp))
 
     Column {
         CroppedImage(image = band.image, modifier = imageModifier)
