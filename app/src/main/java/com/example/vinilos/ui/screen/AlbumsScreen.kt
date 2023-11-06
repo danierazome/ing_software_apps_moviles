@@ -36,18 +36,11 @@ fun Albums(modifier: Modifier = Modifier) {
     val state = albumViewModel.albumsUiState
 
     Column {
-        Image(
-            painter = painterResource(R.drawable.welcome_visitants),
-            contentDescription = null,
-            modifier = Modifier
-                .width(500.dp)
-                .height(200.dp)
-        )
         Text(
             text = "Mis Álbumes",
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(top = 70.dp, bottom = 20.dp)
         )
         LazyVerticalGrid(columns = GridCells.Fixed(3)) {
             when (state) {
