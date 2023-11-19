@@ -1,8 +1,7 @@
 package com.example.vinilos.ui.screen
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -15,23 +14,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vinilos.R
-import com.example.vinilos.model.Album
+import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.ui.component.CroppedImage
 import com.example.vinilos.ui.component.ErrorOnRetrieveData
 import com.example.vinilos.ui.component.LoadingData
+import com.example.vinilos.ui.enumIU.VinylsScreen
 import com.example.vinilos.ui.viewmodel.AlbumUIState
 import com.example.vinilos.ui.viewmodel.AlbumViewModel
 
 @Composable
-@Preview
-fun Albums(modifier: Modifier = Modifier) {
+fun Albums(
+    navigateTo: (String) -> Unit,
+    modifier: Modifier = Modifier) {
+
     val albumViewModel: AlbumViewModel = viewModel(factory = AlbumViewModel.Factory)
     val state = albumViewModel.albumsUiState
 
@@ -52,7 +52,7 @@ fun Albums(modifier: Modifier = Modifier) {
                 is AlbumUIState.Success -> {
                     state.albums.forEach { album ->
                         item {
-                            AlbumItemGrid(album = album)
+                            AlbumItemGrid(album = album, navigateTo = navigateTo)
                         }
                     }
                 }
@@ -67,13 +67,18 @@ fun Albums(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun AlbumItemGrid(album: Album, modifier: Modifier = Modifier) {
+fun AlbumItemGrid(
+    album: Album,
+    navigateTo: (String) -> Unit,
+    modifier: Modifier = Modifier) {
     val imageModifier = Modifier
         .size(dimensionResource(R.dimen.image_small_size))
         .padding(dimensionResource(R.dimen.padding_small))
         .clip(RoundedCornerShape(25.dp))
 
-    Column {
+    Column (modifier = modifier.clickable {
+        navigateTo("${VinylsScreen.Album.name}/${album.id}")
+    }){
         CroppedImage(image = album.cover, modifier = imageModifier)
         Text(
             text = album.name,

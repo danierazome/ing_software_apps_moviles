@@ -1,6 +1,7 @@
 package com.example.vinilos.ui.screen
 
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -16,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -29,9 +31,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vinilos.R
-import com.example.vinilos.model.Album
-import com.example.vinilos.model.Collector
-import com.example.vinilos.model.Musician
+import com.example.vinilos.data.model.Collector
+import com.example.vinilos.data.model.Musician
+import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.ui.component.BottomBarVisitor
 import com.example.vinilos.ui.component.CroppedImage
 import com.example.vinilos.ui.component.ErrorOnRetrieveData
@@ -51,7 +53,13 @@ fun HomeVisitant(
     navigateTo: (String) -> Unit = {},
     navigateUp: () -> Unit = {},
     modifier: Modifier = Modifier) {
-    var bottomBarItemSelected by rememberSaveable { mutableStateOf(VinylsScreen.HomeVisitant.name) }
+    var screenSelected by rememberSaveable { mutableStateOf(VinylsScreen.HomeVisitant.name) }
+    var idObjectSelected by rememberSaveable { mutableIntStateOf(0) }
+
+    val setIdObject: (Int) -> Unit = {idObjectSelected = it }
+    val setScreenSelected: (String) -> Unit = {screenSelected = it }
+
+    Log.d("HOME SCREEN SELECTE", screenSelected)
 
     val albumViewModel: AlbumViewModel =
         viewModel(factory = AlbumViewModel.Factory)
@@ -68,15 +76,15 @@ fun HomeVisitant(
         },
         bottomBar = {
             BottomBarVisitor(
-                selectedItem = bottomBarItemSelected,
-                onSelect = {
-                    bottomBarItemSelected = it;
-                }
+                selectedItem = screenSelected,
+                onSelect = setScreenSelected
             )
         }
     ) { innerPadding ->
-        when (bottomBarItemSelected) {
-            VinylsScreen.AlbumsVisitant.name -> Albums()
+        when (screenSelected) {
+            VinylsScreen.AlbumsVisitant.name -> Albums(
+                navigateTo = navigateTo
+            )
             VinylsScreen.CollectorsVisitant.name -> Collectors()
             VinylsScreen.ArtistsVisitant.name -> Artists()
             else -> HomeScreen(
@@ -105,9 +113,6 @@ fun HomeScreen(
     val componentModifier = Modifier.padding(10.dp)
 
     LazyColumn {
-
-
-
         item {
             Image(
                 painter = painterResource(R.drawable.welcome_visitants),
@@ -150,7 +155,7 @@ fun HomeScreen(
 
 // ------------> ALBUM SECTION
 @Composable
-fun AlbumsComponent(albums: List<Album> , modifier: Modifier = Modifier) {
+fun AlbumsComponent(albums: List<Album>, modifier: Modifier = Modifier) {
     Column (
         modifier = modifier
     ){
@@ -191,7 +196,7 @@ fun AlbumCarouselItem(album: Album, modifier: Modifier = Modifier) {
 // ------------> MUSICIAN SECTION
 
 @Composable
-fun MusiciansComponent(musicians: List<Musician> , modifier: Modifier = Modifier) {
+fun MusiciansComponent(musicians: List<Musician>, modifier: Modifier = Modifier) {
     Column (
         modifier = modifier
     ){
@@ -209,7 +214,7 @@ fun MusiciansComponent(musicians: List<Musician> , modifier: Modifier = Modifier
 }
 
 @Composable
-fun MusicianCarouselItem(musician: Musician , modifier: Modifier = Modifier) {
+fun MusicianCarouselItem(musician: Musician, modifier: Modifier = Modifier) {
 
     val imageModifier = Modifier
         .size(dimensionResource(R.dimen.image_small_size))
@@ -233,7 +238,7 @@ fun MusicianCarouselItem(musician: Musician , modifier: Modifier = Modifier) {
 
 @Composable
 fun CollectorComponent(
-    collectors: List<Collector> ,
+    collectors: List<Collector>,
     randomAvatar: () -> kotlin.String,
     modifier: Modifier = Modifier) {
 

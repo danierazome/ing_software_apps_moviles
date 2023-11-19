@@ -1,11 +1,11 @@
 package com.example.vinilos.albumFakeData
 
-import com.example.vinilos.model.Album
+import com.example.vinilos.data.model.album.AlbumNetwork
 
 object AlbumFakeData {
 
     val albumsData = listOf(
-        Album("El despertar", "Maluma" ),
-        Album("El renacer", "Reykon")
+        AlbumNetwork("El despertar", "Maluma" ),
+        AlbumNetwork("El renacer", "Reykon")
     )
 }

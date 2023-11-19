@@ -1,6 +1,6 @@
 package com.example.vinilos.collectorFakeData
 
-import com.example.vinilos.model.Collector
+import com.example.vinilos.data.model.Collector
 
 object CollectorFakeData {
 
