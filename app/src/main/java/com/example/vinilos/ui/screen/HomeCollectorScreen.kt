@@ -84,7 +84,7 @@ fun HomeCollector(
     ) { innerPadding ->
 
         when (bottomBarItemSelected) {
-            //VinylsScreen.AlbumsCollector.name -> Albums()
+            VinylsScreen.AlbumsCollector.name -> Albums(navigateTo=navigateTo)
             VinylsScreen.ArtistsCollector.name -> Collectors()
             VinylsScreen.New.name -> NewArtist()
             else -> HomeScreenCollector(
