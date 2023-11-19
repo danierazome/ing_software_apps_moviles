@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.vinilos.VinylsApplication
 import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.data.repository.AlbumRepository
+import com.example.vinilos.data.repository.IAlbumRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -23,7 +24,7 @@ sealed interface AlbumUIState {
 }
 
 
-class AlbumViewModel(private val albumRepository: AlbumRepository): ViewModel() {
+class AlbumViewModel(private val albumRepository: IAlbumRepository): ViewModel() {
 
     override fun onCleared() {
         Log.d("ON CLEAR ALBUM MODEL", "ON CLEAR MI PERRO ALBUM MODEL")

@@ -4,6 +4,7 @@ import com.example.vinilos.data.local.entities.album.AlbumEntity
 import com.example.vinilos.data.local.entities.album.AlbumWithTrackAndComment
 import com.example.vinilos.data.local.entities.album.CommentEntity
 import com.example.vinilos.data.local.entities.album.TrackEntity
+import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.data.model.album.Comment
 import com.example.vinilos.data.model.album.DetailedAlbum
 import com.example.vinilos.data.model.album.Track
@@ -75,4 +76,10 @@ fun CommentEntity.asUIModel() = Comment(
     id = id,
     description = description,
     rating = rating
+)
+
+fun AlbumNetwork.asUIModel() = Album(
+    id = id,
+    cover = cover,
+    name = name
 )

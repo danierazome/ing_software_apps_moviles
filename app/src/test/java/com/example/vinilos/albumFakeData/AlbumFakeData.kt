@@ -1,11 +1,43 @@
 package com.example.vinilos.albumFakeData
 
-import com.example.vinilos.data.model.album.AlbumNetwork
+import com.example.vinilos.data.model.album.Album
+import com.example.vinilos.data.network.models.albumNetwork.AlbumNetwork
+import com.example.vinilos.data.network.models.albumNetwork.CommentNetwork
+
 
 object AlbumFakeData {
 
+    val albumsNetworkData = listOf(
+        AlbumNetwork(
+            id = 1,
+            name = "Album01",
+            cover = "www.album01.com",
+            releaseDate = "2021",
+            comments = emptyList(),
+            tracks = emptyList()
+
+        ),
+        AlbumNetwork(
+            id = 2,
+            name = "Album02",
+            cover = "www.album02.com",
+            releaseDate = "2022",
+            comments = emptyList(),
+            tracks = emptyList()
+        ),
+    )
+
     val albumsData = listOf(
-        AlbumNetwork("El despertar", "Maluma" ),
-        AlbumNetwork("El renacer", "Reykon")
+        Album(
+            id = 1,
+            name = "Album01",
+            cover = "www.album01.com"
+
+        ),
+        Album(
+            id = 2,
+            name = "Album02",
+            cover = "www.album02.com"
+        ),
     )
 }
