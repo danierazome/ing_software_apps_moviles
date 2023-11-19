@@ -1,6 +1,6 @@
 package com.example.vinilos.networkTest
 
-import com.example.vinilos.data.NetworkMusicianRepository
+import com.example.vinilos.data.repository.NetworkMusicianRepository
 import com.example.vinilos.musicianFakeData.FakeMusicianApiService
 import com.example.vinilos.musicianFakeData.MusicianFakeData
 import kotlinx.coroutines.test.runTest

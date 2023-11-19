@@ -1,7 +1,7 @@
 package com.example.vinilos.musicianFakeData
 
-import com.example.vinilos.model.Musician
-import com.example.vinilos.network.MusicianApiService
+import com.example.vinilos.data.model.Musician
+import com.example.vinilos.data.network.apiServices.MusicianApiService
 
 class FakeMusicianApiService: MusicianApiService {
     override suspend fun getMusicians(): List<Musician> {

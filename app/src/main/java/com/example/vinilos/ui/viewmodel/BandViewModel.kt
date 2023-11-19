@@ -9,9 +9,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.vinilos.VinylsApplication
-import com.example.vinilos.data.BandRepository
-import com.example.vinilos.model.Album
-import com.example.vinilos.model.Band
+import com.example.vinilos.data.repository.BandRepository
+import com.example.vinilos.data.model.Band
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException

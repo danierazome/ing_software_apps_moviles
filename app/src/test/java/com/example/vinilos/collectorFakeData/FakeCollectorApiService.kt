@@ -1,7 +1,7 @@
 package com.example.vinilos.collectorFakeData
 
-import com.example.vinilos.model.Collector
-import com.example.vinilos.network.CollectorApiService
+import com.example.vinilos.data.model.Collector
+import com.example.vinilos.data.network.apiServices.CollectorApiService
 
 class FakeCollectorApiService: CollectorApiService {
     override suspend fun getCollectors(): List<Collector> {
