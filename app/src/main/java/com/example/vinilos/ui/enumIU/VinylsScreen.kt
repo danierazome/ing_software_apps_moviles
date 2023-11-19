@@ -20,5 +20,6 @@ enum class VinylsScreen(val icon: ImageVector, val inBar: Boolean, val userType:
     HomeCollector(Icons.Filled.Home, true, UserType.Collector, "Home"),
     AlbumsCollector(Icons.Filled.LibraryMusic, true, UserType.Collector, "Albums"),
     ArtistsCollector(Icons.Filled.Person, true, UserType.Collector, "Artists"),
-    New(Icons.Filled.Add, true, UserType.Collector, "New")
+    New(Icons.Filled.Add, true, UserType.Collector, "New"),
+    Album(Icons.Filled.LibraryMusic, false, UserType.None, "Album"),
 }

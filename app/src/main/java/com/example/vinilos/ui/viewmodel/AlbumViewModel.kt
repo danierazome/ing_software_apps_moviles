@@ -10,8 +10,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.vinilos.VinylsApplication
-import com.example.vinilos.data.AlbumRepository
-import com.example.vinilos.model.Album
+import com.example.vinilos.data.model.album.Album
+import com.example.vinilos.data.repository.AlbumRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -25,6 +25,11 @@ sealed interface AlbumUIState {
 
 class AlbumViewModel(private val albumRepository: AlbumRepository): ViewModel() {
 
+    override fun onCleared() {
+        Log.d("ON CLEAR ALBUM MODEL", "ON CLEAR MI PERRO ALBUM MODEL")
+        super.onCleared()
+    }
+
     var albumsUiState: AlbumUIState by mutableStateOf(AlbumUIState.Loading)
         private set
 
@@ -32,8 +37,7 @@ class AlbumViewModel(private val albumRepository: AlbumRepository): ViewModel() 
         getAlbums()
     }
 
-
-    fun getAlbums() {
+    private fun getAlbums() {
         viewModelScope.launch {
             albumsUiState = AlbumUIState.Loading
             albumsUiState = try {
@@ -45,7 +49,6 @@ class AlbumViewModel(private val albumRepository: AlbumRepository): ViewModel() 
             }
         }
     }
-
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

@@ -28,10 +28,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vinilos.R
-import com.example.vinilos.model.Album
-import com.example.vinilos.model.Band
-import com.example.vinilos.model.Collector
-import com.example.vinilos.model.Musician
+import com.example.vinilos.data.model.Band
+import com.example.vinilos.data.model.Collector
+import com.example.vinilos.data.model.Musician
+import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.ui.component.BottomBarCollector
 import com.example.vinilos.ui.component.CroppedImage
 import com.example.vinilos.ui.component.ErrorOnRetrieveData
@@ -84,7 +84,7 @@ fun HomeCollector(
     ) { innerPadding ->
 
         when (bottomBarItemSelected) {
-            VinylsScreen.AlbumsCollector.name -> Albums()
+            //VinylsScreen.AlbumsCollector.name -> Albums()
             VinylsScreen.ArtistsCollector.name -> Collectors()
             VinylsScreen.New.name -> NewArtist()
             else -> HomeScreenCollector(

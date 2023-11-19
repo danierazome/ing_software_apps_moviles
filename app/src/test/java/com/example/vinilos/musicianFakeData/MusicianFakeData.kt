@@ -1,6 +1,6 @@
 package com.example.vinilos.musicianFakeData
 
-import com.example.vinilos.model.Musician
+import com.example.vinilos.data.model.Musician
 
 object MusicianFakeData {
 

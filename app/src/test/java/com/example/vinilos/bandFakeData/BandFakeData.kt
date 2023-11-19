@@ -1,7 +1,6 @@
 package com.example.vinilos.bandFakeData
 
-import com.example.vinilos.model.Album
-import com.example.vinilos.model.Band
+import com.example.vinilos.data.model.Band
 
 object BandFakeData {
 

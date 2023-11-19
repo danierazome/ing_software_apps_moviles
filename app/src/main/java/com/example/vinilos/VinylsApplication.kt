@@ -1,8 +1,8 @@
 package com.example.vinilos
 
 import android.app.Application
-import com.example.vinilos.data.AppContainer
-import com.example.vinilos.data.DefaultAppContainer
+import com.example.vinilos.data.container.AppContainer
+import com.example.vinilos.data.container.DefaultAppContainer
 
 class VinylsApplication: Application() {
 
@@ -10,6 +10,6 @@ class VinylsApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        container = DefaultAppContainer()
+        container = DefaultAppContainer(this)
     }
 }
