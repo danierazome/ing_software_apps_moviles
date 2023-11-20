@@ -23,7 +23,6 @@ fun Collectors(modifier: Modifier = Modifier) {
         viewModel(factory = CollectorViewModel.Factory)
 
     val state = collectorViewModel.collectorUiState
-    Text(text = "Collectors")
 
     Column {
         Text(

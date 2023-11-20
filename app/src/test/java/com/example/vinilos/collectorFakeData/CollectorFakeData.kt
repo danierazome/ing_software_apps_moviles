@@ -5,7 +5,13 @@ import com.example.vinilos.data.model.Collector
 object CollectorFakeData {
 
     val collectorsData = listOf(
-        Collector("Daniel Erazo"),
-        Collector("Marco Aurelio"),
+        Collector(
+            name = "Daniel Erazo",
+            comments = emptyList()
+        ),
+        Collector(
+            name = "Marco Aurelio",
+            comments = emptyList()
+        )
     )
 }

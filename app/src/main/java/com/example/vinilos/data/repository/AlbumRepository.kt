@@ -1,11 +1,9 @@
 package com.example.vinilos.data.repository
 
-import android.util.Log
 import com.example.vinilos.data.mappers.asEntity
 import com.example.vinilos.data.local.dao.AlbumDao
 import com.example.vinilos.data.local.dao.CommentDao
 import com.example.vinilos.data.local.dao.TrackDao
-import com.example.vinilos.data.local.entities.album.AlbumEntity
 import com.example.vinilos.data.mappers.asUIDetailedModel
 import com.example.vinilos.data.mappers.asUIModel
 import com.example.vinilos.data.model.album.Album
@@ -30,14 +28,10 @@ class AlbumRepository(
     private var albums = emptyList<Album>()
 
     override suspend fun getAlbums(): List<Album> {
-
-        Log.d("MUTEX", "1")
         if (albums.isNotEmpty()) return albumsMutex.withLock { this.albums }
-        Log.d("MUTEX", "2")
         albumsMutex.withLock {
             this.albums = albumRemoteDataSource.getAlbums().map { it.asUIModel() }
         }
-
         return albumsMutex.withLock { this.albums }
     }
 

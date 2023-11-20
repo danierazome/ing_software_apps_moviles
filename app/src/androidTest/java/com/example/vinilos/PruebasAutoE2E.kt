@@ -7,12 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.example.vinilos.ui.screen.VinylApp
 import com.example.vinilos.ui.theme.VinilosTheme
-import okhttp3.internal.wait
 
 import org.junit.Test
 
@@ -130,7 +128,7 @@ class E2ETests {
     }
 
     @Test
-    fun Escenario05() {
+    fun Escenario06() {
         // Start the app
         composeTestRule.setContent {
             VinilosTheme {
@@ -151,7 +149,7 @@ class E2ETests {
     }
 
     @Test
-    fun Escenario06() {
+    fun Escenario07() {
         // Start the app
         composeTestRule.setContent {
             VinilosTheme {
