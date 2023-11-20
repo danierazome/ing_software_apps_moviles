@@ -106,5 +106,24 @@ class E2ETests {
         composeTestRule.onNodeWithText("SOY UN VISITANTE").performClick()
         composeTestRule.onNodeWithText("¡Bienvenido Visitante!").assertIsDisplayed()
     }
+    @Test
+    fun Escenario05() {
+        // Start the app
+        composeTestRule.setContent {
+            VinilosTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    VinylApp()
+                }
+            }
+        }
+
+        composeTestRule.onNodeWithText("SOY UN VISITANTE").performClick()
+        composeTestRule.onNodeWithText("¡Bienvenido Visitante!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Artists").performClick()
+        composeTestRule.onNodeWithText("Mis Artistas").assertIsDisplayed()
+    }
 
 }
