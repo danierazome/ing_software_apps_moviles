@@ -1,7 +1,7 @@
 package com.example.vinilos.data.network.apiServices
 
 import com.example.vinilos.data.model.album.Album
-import com.example.vinilos.data.network.models.albumNetwork.AlbumNetwork
+import com.example.vinilos.data.network.models.network.AlbumNetwork
 import retrofit2.http.GET
 import retrofit2.http.Path
 

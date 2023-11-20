@@ -3,17 +3,11 @@ package com.example.vinilos.data.network.models.network
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AlbumNetwork(
+data class ArtistNetwork(
     val id: Int,
     val name: String,
-    val cover: String,
-    val releaseDate: String,
-    val comments: List<CommentNetwork>,
-    val tracks: List<TrackNetwork>
+    val image: String,
+    val description: String,
+    val birthDate: String,
+    val albums: List<AlbumNetwork>,
 )
-
-@Serializable
-data class CommentNetwork(val id: Int, val description: String, val rating: Int)
-
-@Serializable
-data class TrackNetwork(val id: Int, val duration: String, val name: String)

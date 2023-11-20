@@ -1,78 +1,25 @@
 package com.example.vinilos.data.mappers
 
-import com.example.vinilos.data.local.entities.album.AlbumEntity
-import com.example.vinilos.data.local.entities.album.AlbumWithTrackAndComment
-import com.example.vinilos.data.local.entities.album.CommentEntity
-import com.example.vinilos.data.local.entities.album.TrackEntity
-import com.example.vinilos.data.model.album.Comment
-import com.example.vinilos.data.model.album.DetailedAlbum
-import com.example.vinilos.data.model.album.Track
-import com.example.vinilos.data.network.models.network.AlbumNetwork
-import com.example.vinilos.data.network.models.network.CommentNetwork
+import com.example.vinilos.data.local.entities.musician.MusicianEntity
+import com.example.vinilos.data.model.album.Album
+import com.example.vinilos.data.network.models.network.ArtistNetwork
+import com.example.vinilos.data.model.musician.DetailedArtist
 import com.example.vinilos.data.network.models.network.TrackNetwork
 
 
-fun AlbumNetwork.asEntity() = AlbumEntity(
+fun ArtistNetwork.asEntity() = MusicianEntity(
     id = id,
-    cover = cover,
     name = name,
-    releaseDate = releaseDate
+    image = image,
+    description = description,
+    birthDate = birthDate
 )
 
-fun TrackNetwork.asEntity(albumId: Int) = TrackEntity(
+/*fun ArtistNetwork.asUIDetailedModel() = DetailedArtist(
     id = id,
-    duration = duration,
     name = name,
-    albumId = albumId
-)
-
-fun CommentNetwork.asEntity(albumId: Int) = CommentEntity(
-    id = id,
+    image = image,
     description = description,
-    rating = rating,
-    albumId = albumId
-)
-
-fun AlbumNetwork.asUIDetailedModel() = DetailedAlbum(
-    id = id,
-    cover = cover,
-    name = name,
-    releaseDate = releaseDate,
-    tracks = tracks.map { it.asUIModel() },
-    comments = comments.map { it.asUIModel() }
-)
-
-fun TrackNetwork.asUIModel() = Track(
-    id = id,
-    duration = duration,
-    name = name
-)
-
-
-fun CommentNetwork.asUIModel() = Comment(
-    id = id,
-    description = description,
-    rating = rating
-)
-
-fun AlbumWithTrackAndComment.asUIModel() = DetailedAlbum(
-    id = albumEntity.id,
-    cover = albumEntity.cover,
-    name = albumEntity.name,
-    releaseDate = albumEntity.releaseDate,
-    tracks = trackEntity.map { it.asUIModel() },
-    comments = commentEntity.map { it.asUIModel() }
-)
-
-fun TrackEntity.asUIModel() = Track(
-    id = id,
-    duration = duration,
-    name = name
-)
-
-
-fun CommentEntity.asUIModel() = Comment(
-    id = id,
-    description = description,
-    rating = rating
-)
+    birthDate = birthDate,
+    albums: albums,
+)*/

@@ -7,9 +7,9 @@ import com.example.vinilos.data.local.entities.album.TrackEntity
 import com.example.vinilos.data.model.album.Comment
 import com.example.vinilos.data.model.album.DetailedAlbum
 import com.example.vinilos.data.model.album.Track
-import com.example.vinilos.data.network.models.albumNetwork.AlbumNetwork
-import com.example.vinilos.data.network.models.albumNetwork.CommentNetwork
-import com.example.vinilos.data.network.models.albumNetwork.TrackNetwork
+import com.example.vinilos.data.network.models.network.AlbumNetwork
+import com.example.vinilos.data.network.models.network.CommentNetwork
+import com.example.vinilos.data.network.models.network.TrackNetwork
 
 
 fun AlbumNetwork.asEntity() = AlbumEntity(

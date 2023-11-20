@@ -10,7 +10,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.vinilos.VinylsApplication
 import com.example.vinilos.data.repository.MusicianRepository
-import com.example.vinilos.data.model.Musician
+import com.example.vinilos.data.model.musician.Musician
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException

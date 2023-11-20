@@ -32,6 +32,7 @@ import com.example.vinilos.data.model.Band
 import com.example.vinilos.data.model.Collector
 import com.example.vinilos.data.model.Musician
 import com.example.vinilos.data.model.album.Album
+import com.example.vinilos.data.model.musician.Musician
 import com.example.vinilos.ui.component.BottomBarCollector
 import com.example.vinilos.ui.component.CroppedImage
 import com.example.vinilos.ui.component.ErrorOnRetrieveData

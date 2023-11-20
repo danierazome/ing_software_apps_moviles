@@ -22,4 +22,5 @@ enum class VinylsScreen(val icon: ImageVector, val inBar: Boolean, val userType:
     ArtistsCollector(Icons.Filled.Person, true, UserType.Collector, "Artists"),
     New(Icons.Filled.Add, true, UserType.Collector, "New"),
     Album(Icons.Filled.LibraryMusic, false, UserType.None, "Album"),
+    Artist(Icons.Filled.LibraryMusic, false, UserType.None, "Artist")
 }

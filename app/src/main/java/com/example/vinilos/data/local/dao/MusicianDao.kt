@@ -9,26 +9,16 @@ import com.example.vinilos.data.local.entities.album.AlbumEntity
 import com.example.vinilos.data.local.entities.album.AlbumWithTrackAndComment
 import com.example.vinilos.data.local.entities.album.CommentEntity
 import com.example.vinilos.data.local.entities.album.TrackEntity
+import com.example.vinilos.data.local.entities.musician.MusicianEntity
 
 @Dao
-interface AlbumDao {
+interface MusicianDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(albumEntity: AlbumEntity)
-
     @Transaction
-    @Query("SELECT * FROM album WHERE id = :albumId")
-    suspend fun getAlbumWithTrackAndComment(albumId: Int): AlbumWithTrackAndComment
+    @Query("SELECT * FROM musician WHERE id = :musicianId")
+    suspend fun getArtistWithAlbum(musicianId: Int): MusicianEntity
 
 }
 
-@Dao
-interface TrackDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(trackEntity: TrackEntity)
-}
-
-@Dao
-interface CommentDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(commentEntity: CommentEntity)
-}

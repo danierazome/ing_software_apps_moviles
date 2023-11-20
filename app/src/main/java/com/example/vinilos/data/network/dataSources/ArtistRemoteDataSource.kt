@@ -1,15 +1,15 @@
 package com.example.vinilos.data.network.dataSources
 
-import com.example.vinilos.data.model.album.Album
-import com.example.vinilos.data.network.apiServices.AlbumApiService
-import com.example.vinilos.data.network.models.albumNetwork.AlbumNetwork
+import com.example.vinilos.data.model.musician.Musician
+import com.example.vinilos.data.network.apiServices.MusicianApiService
+import com.example.vinilos.data.network.models.network.ArtistNetwork
 
-class AlbumRemoteDataSource(private val albumApiService: AlbumApiService) {
-    suspend fun getAlbums(): List<Album> {
-        return albumApiService.getAlbums()
+class ArtistRemoteDataSource(private val artistApiService: MusicianApiService) {
+    suspend fun getMusician(): List<Musician> {
+        return artistApiService.getMusicians()
     }
 
-    suspend fun getDetailedAlbum(id: Int): AlbumNetwork {
-        return albumApiService.getDetailedAlbum(id)
+    suspend fun getDetailedArtist(id: Int): ArtistNetwork {
+        return artistApiService.getDetailedArtist(id)
     }
 }

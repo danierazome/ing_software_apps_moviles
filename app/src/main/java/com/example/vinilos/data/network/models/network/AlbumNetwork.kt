@@ -1,4 +1,4 @@
-package com.example.vinilos.data.network.models.albumNetwork
+package com.example.vinilos.data.network.models.network
 
 import kotlinx.serialization.Serializable
 

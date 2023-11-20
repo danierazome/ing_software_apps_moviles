@@ -10,46 +10,46 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.vinilos.VinylsApplication
-import com.example.vinilos.data.model.album.DetailedAlbum
-import com.example.vinilos.data.repository.AlbumRepository
+import com.example.vinilos.data.network.models.network.ArtistNetwork
+import com.example.vinilos.data.repository.MusicianRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
-sealed interface DetailedAlbumUIState {
-    data class Success(val album: DetailedAlbum): DetailedAlbumUIState
-    object Loading: DetailedAlbumUIState
-    object Error: DetailedAlbumUIState
+sealed interface DetailedArtistUIState {
+    data class Success(val artist: ArtistNetwork): DetailedArtistUIState
+    object Loading: DetailedArtistUIState
+    object Error: DetailedArtistUIState
 }
 
 
-class DetailedAlbumViewModel(private val albumRepository: AlbumRepository): ViewModel() {
+class DetailedArtistViewModel(private val artistRepository: MusicianRepository): ViewModel() {
 
-    var detailedAlbumUiState: DetailedAlbumUIState by mutableStateOf(DetailedAlbumUIState.Loading)
+    var detailedArtistUiState: DetailedArtistUIState by mutableStateOf(DetailedArtistUIState.Loading)
         private set
 
-    var albumId: Int = -1
+    var artistId: Int = -1
         private set
 
     init {
-        Log.d("ON INIT ZORRO", "ON INIIIT MI PERRO")
+        Log.d("INIT", "ON INIT")
     }
 
-    fun updateDetailedAlbumUiState(id: Int) {
-        Log.d("UPDATE DETAILED ALBUM STATE", "UPDATING")
-        this.albumId = id
+    fun updateDetailedArtistUiState(id: Int) {
+        Log.d("UPDATE DETAILED Artist STATE", "UPDATING")
+        this.artistId = id
         viewModelScope.launch {
-            Log.d("ALBUM", "KICKING OFF")
-            detailedAlbumUiState = DetailedAlbumUIState.Loading
-            detailedAlbumUiState = try {
-                Log.d("ALBUM", "OK")
-                DetailedAlbumUIState.Success(albumRepository.getDetailedAlbum(id))
+            Log.d("ARTIST", "KICKING OFF")
+            detailedArtistUiState = DetailedArtistUIState.Loading
+            detailedArtistUiState = try {
+                Log.d("ARTIST", "OK")
+                DetailedArtistUIState.Success(artistRepository.getDetailedArtist(id))
             } catch (e: IOException) {
-                Log.d("ALBUM", e.toString())
-                DetailedAlbumUIState.Error
+                Log.d("ARTIST", e.toString())
+                DetailedArtistUIState.Error
             } catch (e: HttpException) {
-                Log.d("ALBUM", e.toString())
-                DetailedAlbumUIState.Error
+                Log.d("ARTIST", e.toString())
+                DetailedArtistUIState.Error
             }
         }
     }
