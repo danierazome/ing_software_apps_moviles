@@ -1,6 +1,6 @@
 package com.example.vinilos.data.repository
 
-import com.example.vinilos.data.model.Musician
+import com.example.vinilos.data.model.Musician.Musician
 import com.example.vinilos.data.network.apiServices.MusicianApiService
 
 interface MusicianRepository {
