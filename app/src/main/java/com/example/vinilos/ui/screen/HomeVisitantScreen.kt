@@ -86,7 +86,9 @@ fun HomeVisitant(
                 navigateTo = navigateTo
             )
             VinylsScreen.CollectorsVisitant.name -> Collectors()
-            VinylsScreen.ArtistsVisitant.name -> Artists()
+            VinylsScreen.ArtistsVisitant.name -> Artists(
+                navigateTo = navigateTo
+            )
             else -> HomeScreen(
                 albumsUiState = albumViewModel.albumsUiState,
                 collectorUIState = collectorViewModel.collectorUiState,
