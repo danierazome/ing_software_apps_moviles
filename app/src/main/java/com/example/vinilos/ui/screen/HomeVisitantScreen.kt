@@ -3,6 +3,7 @@ package com.example.vinilos.ui.screen
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -83,7 +84,7 @@ fun HomeVisitant(
             VinylsScreen.AlbumsVisitant.name -> Albums(
                 navigateTo = navigateTo
             )
-            VinylsScreen.CollectorsVisitant.name -> Collectors()
+            VinylsScreen.CollectorsVisitant.name -> Collectors(navigateTo = navigateTo)
             VinylsScreen.ArtistsVisitant.name -> Artists(
                 navigateTo = navigateTo
             )
@@ -92,7 +93,8 @@ fun HomeVisitant(
                 collectorUIState = collectorViewModel.collectorUiState,
                 musicianUIState = musicianViewModel.musicianUIState,
                 randomAvatar = {collectorViewModel.randomAvatar()},
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
+                navigateTo = navigateTo,
             )
         }
     }
@@ -107,7 +109,8 @@ fun HomeScreen(
     collectorUIState: CollectorUIState,
     musicianUIState: MusicianUIState,
     randomAvatar: () -> String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateTo: (String) -> Unit,
 ) {
 
     val componentModifier = Modifier.padding(10.dp)
@@ -145,7 +148,7 @@ fun HomeScreen(
                 is CollectorUIState.Loading -> LoadingData()
                 is CollectorUIState.Success -> CollectorComponent(
                     collectors = collectorUIState.collectors,
-                    randomAvatar = randomAvatar)
+                    randomAvatar = randomAvatar, navigateTo = navigateTo)
                 is CollectorUIState.Error -> ErrorOnRetrieveData("Coleccionistas no disponibles")
             }
         }
@@ -240,7 +243,8 @@ fun MusicianCarouselItem(musician: Musician, modifier: Modifier = Modifier) {
 fun CollectorComponent(
     collectors: List<Collector>,
     randomAvatar: () -> kotlin.String,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier,
+    navigateTo: (String) -> Unit) {
 
     Column (
         modifier = modifier.padding(bottom = 100.dp)
@@ -252,21 +256,24 @@ fun CollectorComponent(
         )
         LazyRow {
             items(collectors) { collector ->
-                CollectorsCarouselItem(collector = collector, avatar = randomAvatar.invoke())
+                CollectorsCarouselItem(collector = collector, avatar = randomAvatar.invoke(), modifier, navigateTo)
             }
         }
     }
 }
 
 @Composable
-fun CollectorsCarouselItem(collector: Collector, avatar: String, modifier: Modifier = Modifier) {
+fun CollectorsCarouselItem(collector: Collector, avatar: String, modifier: Modifier = Modifier,
+                           navigateTo: (String) -> Unit) {
 
     val imageModifier = Modifier
         .size(dimensionResource(R.dimen.image_small_size))
         .padding(dimensionResource(R.dimen.padding_small))
         .clip(RoundedCornerShape(25.dp))
 
-    Column {
+    Column(modifier = modifier.clickable {
+        navigateTo("${VinylsScreen.CollectorsVisitant.name}/${collector.id}")
+    }) {
         CroppedImage(image = avatar, modifier = imageModifier)
         Text(
             text = collector.name,

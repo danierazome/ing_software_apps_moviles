@@ -96,7 +96,7 @@ fun HomeCollector(
         when (bottomBarItemSelected) {
             VinylsScreen.Prize.name -> PrizeScreen(snackBarHostState = snackBarHostState)
             VinylsScreen.AlbumsCollector.name -> Albums(navigateTo=navigateTo)
-            VinylsScreen.ArtistsCollector.name -> Collectors()
+            VinylsScreen.ArtistsCollector.name -> Collectors(navigateTo=navigateTo)
             VinylsScreen.New.name -> NewArtist()
             else -> HomeScreenCollector(
                 albumsUiState = albumViewModel.albumsUiState,
