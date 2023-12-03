@@ -10,9 +10,7 @@ class AlbumRemoteDataSource(private val albumApiService: AlbumApiService) {
     }
 
     suspend fun getDetailedAlbum(id: Int): AlbumNetwork {
-        val test = albumApiService.getDetailedAlbum(id)
-        println(test)
-        return test
+        return albumApiService.getDetailedAlbum(id)
     }
 
     suspend fun addTrackAlbum(id: Int, request: AddTrackRequest): AddTrackRequest {
