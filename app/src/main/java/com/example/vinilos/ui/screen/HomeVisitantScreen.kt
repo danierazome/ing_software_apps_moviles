@@ -54,12 +54,8 @@ fun HomeVisitant(
     navigateUp: () -> Unit = {},
     modifier: Modifier = Modifier) {
     var screenSelected by rememberSaveable { mutableStateOf(VinylsScreen.HomeVisitant.name) }
-    var idObjectSelected by rememberSaveable { mutableIntStateOf(0) }
 
-    val setIdObject: (Int) -> Unit = {idObjectSelected = it }
     val setScreenSelected: (String) -> Unit = {screenSelected = it }
-
-    Log.d("HOME SCREEN SELECTE", screenSelected)
 
     val albumViewModel: AlbumViewModel =
         viewModel(factory = AlbumViewModel.Factory)
@@ -72,7 +68,9 @@ fun HomeVisitant(
 
     Scaffold(
         topBar = {
-                 TopBar(title = "¡Bienvenido Visitante!", navigateUp = navigateUp)
+                 TopBar(
+                     title = findTopBarTitleVisitant(screenSelected),
+                     navigateUp = navigateUp)
         },
         bottomBar = {
             BottomBarVisitor(
@@ -278,5 +276,13 @@ fun CollectorsCarouselItem(collector: Collector, avatar: String, modifier: Modif
             maxLines = 2,
             modifier = Modifier.width(100.dp)
         )
+    }
+}
+
+fun findTopBarTitleVisitant(currentScreen: String): String {
+    return if (currentScreen == VinylsScreen.HomeVisitant.name) {
+        "¡Bienvenido Visitante!"
+    } else {
+        ""
     }
 }
