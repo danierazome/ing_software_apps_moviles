@@ -14,6 +14,7 @@ import com.example.vinilos.data.network.apiServices.BandApiService
 import com.example.vinilos.data.network.apiServices.CollectorApiService
 import com.example.vinilos.data.network.apiServices.MusicianApiService
 import com.example.vinilos.data.network.dataSources.AlbumRemoteDataSource
+import com.example.vinilos.data.network.dataSources.CollectorRemoteDataSource
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -72,8 +73,12 @@ class DefaultAppContainer(private val context: Context): AppContainer {
         retrofit.create(CollectorApiService::class.java)
     }
 
+    private val collectorRemoteDataSource: CollectorRemoteDataSource by lazy {
+        CollectorRemoteDataSource(retrofitCollectorService)
+    }
+
     override val collectorRepository: CollectorRepository by lazy {
-        NetworkCollectorRepository(retrofitCollectorService)
+        NetworkCollectorRepository(collectorRemoteDataSource, database.collectorDao(), database.performerDao(), database.collectorCommentDao())
     }
 
     //ALBUM

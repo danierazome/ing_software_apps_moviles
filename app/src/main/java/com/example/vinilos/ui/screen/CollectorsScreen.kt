@@ -18,7 +18,8 @@ import com.example.vinilos.ui.viewmodel.CollectorViewModel
 
 @Composable
 @Preview
-fun Collectors(modifier: Modifier = Modifier) {
+fun Collectors(modifier: Modifier = Modifier,
+               navigateTo: (String) -> Unit,) {
     val collectorViewModel: CollectorViewModel =
         viewModel(factory = CollectorViewModel.Factory)
 
@@ -43,7 +44,7 @@ fun Collectors(modifier: Modifier = Modifier) {
                     val sortedCollectors = collectors.sortedByDescending { it.comments?.size }
                     sortedCollectors.take(3).toTypedArray().forEach { collector ->
                         item {
-                            CollectorsCarouselItem(collector = collector, avatar = collectorViewModel.randomAvatar())
+                            CollectorsCarouselItem(collector = collector, avatar = collectorViewModel.randomAvatar(), navigateTo = navigateTo)
                         }
                     }
                 }
@@ -74,7 +75,7 @@ fun Collectors(modifier: Modifier = Modifier) {
                     val sortedCollectors = collectors.sortedByDescending { it.comments?.size }
                     sortedCollectors.drop(3).toTypedArray().forEach { collector ->
                         item {
-                            CollectorsCarouselItem(collector = collector, avatar = collectorViewModel.randomAvatar())
+                            CollectorsCarouselItem(collector = collector, avatar = collectorViewModel.randomAvatar(), navigateTo = navigateTo)
                         }
                     }
                 }

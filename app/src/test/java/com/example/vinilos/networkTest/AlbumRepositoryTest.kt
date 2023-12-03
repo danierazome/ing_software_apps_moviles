@@ -2,9 +2,6 @@ package com.example.vinilos.networkTest
 
 import android.content.Context
 import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.SmallTest
 import com.example.vinilos.albumFakeData.AlbumFakeData
 import com.example.vinilos.albumFakeData.FakeAlbumApiService
 import com.example.vinilos.data.local.AppDatabase
