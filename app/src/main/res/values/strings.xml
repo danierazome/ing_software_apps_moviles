@@ -1,10 +1,31 @@
 <resources>
-    <string name="app_name">Vinilos</string>
-    <string name="greeting_login">Bienvenido a Vinilos</string>
-    <string name="greeting_visitant">Bienvenido Visitante</string>
-    <string name="login_header">¡Bienvenido a Vinilos!\nLa app de los melómanos</string>
-    <string name="login_collector">SOY UN COLECCIONISTA</string>
-    <string name="login_visitor">SOY UN VISITANTE</string>
+    <string name="app_name">Vinyls</string>
+    <string name="greeting_login">Welcome to Vinyls</string>
+    <string name="greeting_visitant">Welcome Visitant</string>
+    <string name="greeting_collector">Welcome Collector</string>
+
+    <string name="login_header">Welcome to Vinyls, the best app ever</string>
+    <string name="login_collector">I AM COLLECTOR</string>
+    <string name="login_visitor">I AM VISITANT</string>
+
+    <string name="most_popular_albums">Most popular albums</string>
+    <string name="artist_on_trend">Artists on TREND </string>
+    <string name="important_collectors">Important collectors</string>
+    <string name="bands_on_fire">Bands on fire</string>
+
+    <string name="my_albums">My albums</string>
+
+    <string name="my_artists">My artists</string>
+
+    <string name="collectors_on_trend">Collectors on trend</string>
+    <string name="collectors">Collectors</string>
+
+    <string name="new_award">New award</string>
+    <string name="prize_name">Name</string>
+    <string name="prize_des">Description</string>
+    <string name="prize_org">Organization</string>
+    <string name="prize_save">Save</string>
+
 
     <dimen name="padding_small_int">16</dimen>
     <dimen name="padding_small">8dp</dimen>

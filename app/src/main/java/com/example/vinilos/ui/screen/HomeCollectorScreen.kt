@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -76,7 +77,7 @@ fun HomeCollector(
     Scaffold(
         topBar = {
             TopBar(
-                title = findTopBarTitleCollector(bottomBarItemSelected),
+                title = if (onHomeScreenCollector(bottomBarItemSelected)) stringResource(id = R.string.greeting_collector) else "",
                 navigateUp = navigateUp)
         },
         bottomBar = {
@@ -185,7 +186,7 @@ fun AlbumsCollectorComponent(albums: List<Album>, modifier: Modifier = Modifier)
     ){
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Albums mas populares",
+            text = stringResource(id = R.string.most_popular_albums),
             style = MaterialTheme.typography.titleMedium
         )
         LazyRow {
@@ -225,7 +226,7 @@ fun MusiciansCollectorComponent(musicians: List<Musician>, modifier: Modifier = 
     ){
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Artistas en tendencia",
+            text = stringResource(id = R.string.artist_on_trend),
             style = MaterialTheme.typography.titleMedium
         )
         LazyRow {
@@ -270,7 +271,7 @@ fun CollectorCollectorComponent(
     ){
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Coleccionistas reconocidos",
+            text = stringResource(id = R.string.important_collectors),
             style = MaterialTheme.typography.titleMedium
         )
         LazyRow {
@@ -313,7 +314,7 @@ fun BandCollectorComponente (
     ) {
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Bandas del momento",
+            text = stringResource(id = R.string.bands_on_fire),
             style = MaterialTheme.typography.titleMedium
         )
         LazyRow {
@@ -344,11 +345,6 @@ fun BandCarouselCollectorItem(band: Band, modifier: Modifier){
         )
     }
 }
-
-fun findTopBarTitleCollector(currentScreen: String): String {
-    return if (currentScreen == VinylsScreen.HomeCollector.name) {
-        "¡Bienvenido Coleccionista!"
-    } else {
-        ""
-    }
+fun onHomeScreenCollector(currentScreen: String): Boolean {
+    return currentScreen == VinylsScreen.HomeCollector.name
 }
