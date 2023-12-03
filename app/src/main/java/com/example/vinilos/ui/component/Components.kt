@@ -32,3 +32,8 @@ fun LoadingData( modifier: Modifier = Modifier) {
 fun ErrorOnRetrieveData( message: String, modifier: Modifier = Modifier) {
     Text(text = message,  modifier = Modifier.width(64.dp))
 }
+
+@Composable
+fun AddTrackSuccessfully( message: String, modifier: Modifier = Modifier) {
+    Text(text = message,  modifier = Modifier.width(100.dp))
+}

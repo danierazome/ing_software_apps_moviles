@@ -8,7 +8,9 @@ import com.example.vinilos.data.mappers.asUIDetailedModel
 import com.example.vinilos.data.mappers.asUIModel
 import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.data.model.album.DetailedAlbum
+import com.example.vinilos.data.model.album.TrackRequest
 import com.example.vinilos.data.network.dataSources.AlbumRemoteDataSource
+import com.example.vinilos.data.network.models.albumNetwork.AddTrackRequest
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -52,5 +54,15 @@ class AlbumRepository(
             .forEach { commentDao.insert(it) }
 
         return albumNetwork.asUIDetailedModel()
+    }
+
+    suspend fun addTrackToAlbum(albumId: Int, name: String, duration: String): TrackRequest {
+        try {
+            val request = AddTrackRequest(name, duration)
+            val trackRequest = albumRemoteDataSource.addTrackAlbum(albumId, request)
+            return trackRequest.asUIModel()
+        } catch (e: Exception) {
+            throw e
+        }
     }
 }

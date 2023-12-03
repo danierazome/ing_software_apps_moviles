@@ -11,6 +11,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.vinilos.VinylsApplication
 import com.example.vinilos.data.model.album.DetailedAlbum
+import com.example.vinilos.data.model.album.TrackRequest
 import com.example.vinilos.data.repository.AlbumRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -18,6 +19,7 @@ import java.io.IOException
 
 sealed interface DetailedAlbumUIState {
     data class Success(val album: DetailedAlbum): DetailedAlbumUIState
+    data class SuccessAddTrack(val track: TrackRequest): DetailedAlbumUIState
     object Loading: DetailedAlbumUIState
     object Error: DetailedAlbumUIState
 }
@@ -44,6 +46,25 @@ class DetailedAlbumViewModel(private val albumRepository: AlbumRepository): View
             detailedAlbumUiState = try {
                 Log.d("ALBUM", "OK")
                 DetailedAlbumUIState.Success(albumRepository.getDetailedAlbum(id))
+            } catch (e: IOException) {
+                Log.d("ALBUM", e.toString())
+                DetailedAlbumUIState.Error
+            } catch (e: HttpException) {
+                Log.d("ALBUM", e.toString())
+                DetailedAlbumUIState.Error
+            }
+        }
+    }
+
+    fun addTrackAlbum(id: Int, trackname: String, trackduration: String){
+        Log.d("Adding new Track to Album", "UPDATING $trackname, $trackduration, $id")
+        this.albumId = id
+        viewModelScope.launch {
+            Log.d("ALBUM", "KICKING OFF")
+            detailedAlbumUiState = DetailedAlbumUIState.Loading
+            detailedAlbumUiState = try {
+                Log.d("ALBUM", "OK")
+                DetailedAlbumUIState.SuccessAddTrack(albumRepository.addTrackToAlbum(albumId, trackname, trackduration))
             } catch (e: IOException) {
                 Log.d("ALBUM", e.toString())
                 DetailedAlbumUIState.Error
