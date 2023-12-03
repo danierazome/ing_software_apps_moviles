@@ -9,3 +9,4 @@ data class DetailedAlbum(
 )
 data class Comment(val id: Int, val description: String, val rating: Int)
 data class Track(val id: Int, val duration: String, val name: String)
+data class TrackRequest(val  name: String, val duration: String)

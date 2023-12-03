@@ -8,6 +8,8 @@ import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.data.model.album.Comment
 import com.example.vinilos.data.model.album.DetailedAlbum
 import com.example.vinilos.data.model.album.Track
+import com.example.vinilos.data.model.album.TrackRequest
+import com.example.vinilos.data.network.models.albumNetwork.AddTrackRequest
 import com.example.vinilos.data.network.models.albumNetwork.AlbumNetwork
 import com.example.vinilos.data.network.models.albumNetwork.CommentNetwork
 import com.example.vinilos.data.network.models.albumNetwork.TrackNetwork
@@ -49,7 +51,10 @@ fun TrackNetwork.asUIModel() = Track(
     name = name
 )
 
-
+fun AddTrackRequest.asUIModel() = TrackRequest(
+    name = duration,
+    duration = name
+)
 fun CommentNetwork.asUIModel() = Comment(
     id = id,
     description = description,
