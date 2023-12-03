@@ -46,6 +46,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import com.example.vinilos.data.model.album.Comment
 import com.example.vinilos.data.model.album.Track
@@ -55,10 +56,8 @@ fun DetailedAlbum(id: Int, navigateUp: () -> Unit = {}, modifier: Modifier = Mod
 
     val detailedAlbumViewModel: DetailedAlbumViewModel = viewModel(factory = DetailedAlbumViewModel.Factory)
 
-    Log.d("album detailed painted", "painted")
     if (detailedAlbumViewModel.albumId != id) {
         detailedAlbumViewModel.updateDetailedAlbumUiState(id)
-        Log.d("album id is diffrent", "is different")
     }
 
     var detailedAlbumUiState = detailedAlbumViewModel.detailedAlbumUiState
@@ -128,7 +127,7 @@ fun AlbumTracks(detailedAlbum: DetailedAlbum) {
             .fillMaxWidth()
 
     ) {
-        Text(text = "Tracks", modifier = Modifier.padding(5.dp), style = MaterialTheme.typography.titleMedium)
+        Text(text = "Tracks", modifier = Modifier.padding(5.dp).testTag("Tracks"), style = MaterialTheme.typography.titleMedium)
         detailedAlbum.tracks.forEach{TrackItem(track = it)}
     }
 }

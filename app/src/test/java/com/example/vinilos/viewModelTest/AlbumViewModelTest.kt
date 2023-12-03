@@ -1,7 +1,7 @@
 package com.example.vinilos.viewModelTest
 
 import com.example.vinilos.albumFakeData.AlbumFakeData
-import com.example.vinilos.albumFakeData.FakeNetworkIAlbumRepository
+import com.example.vinilos.albumFakeData.FakeAlbumRepository
 import com.example.vinilos.rules.TestDispatcherRule
 import com.example.vinilos.ui.viewmodel.AlbumUIState
 import com.example.vinilos.ui.viewmodel.AlbumViewModel
@@ -19,7 +19,7 @@ class AlbumViewModelTest {
     fun getAlbums_verifyUiState_success() =
         runTest {
             val albumViewModel = AlbumViewModel(
-                albumRepository = FakeNetworkIAlbumRepository()
+                albumRepository = FakeAlbumRepository()
             )
             assertEquals(
                 AlbumUIState.Success(AlbumFakeData.albumsData),

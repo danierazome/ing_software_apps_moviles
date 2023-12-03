@@ -44,6 +44,15 @@ fun VinylApp(navController: NavHostController = rememberNavController()) {
             DetailedAlbum(id= id, navigateUp = {navController.navigateUp()})
         }
 
+        composable(
+            "${VinylsScreen.Artist.name}/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val arguments = requireNotNull(backStackEntry.arguments)
+            val id = arguments.getInt("id")
+            DetailedArtist(id= id, navigateUp = {navController.navigateUp()})
+        }
+
     }
 
 }

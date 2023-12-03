@@ -10,20 +10,20 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.vinilos.VinylsApplication
-import com.example.vinilos.data.network.models.network.ArtistNetwork
-import com.example.vinilos.data.repository.MusicianRepository
+import com.example.vinilos.data.model.musician.Musician
+import com.example.vinilos.data.repository.IMusicianRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
 sealed interface DetailedArtistUIState {
-    data class Success(val artist: ArtistNetwork): DetailedArtistUIState
+    data class Success(val artist: Musician): DetailedArtistUIState
+
     object Loading: DetailedArtistUIState
     object Error: DetailedArtistUIState
 }
 
-
-class DetailedArtistViewModel(private val artistRepository: MusicianRepository): ViewModel() {
+class DetailedArtistViewModel(private val artistRepository: IMusicianRepository): ViewModel() {
 
     var detailedArtistUiState: DetailedArtistUIState by mutableStateOf(DetailedArtistUIState.Loading)
         private set
@@ -36,10 +36,9 @@ class DetailedArtistViewModel(private val artistRepository: MusicianRepository):
     }
 
     fun updateDetailedArtistUiState(id: Int) {
-        Log.d("UPDATE DETAILED Artist STATE", "UPDATING")
+        Log.d("UPDATE DETAILED ARTIST STATE", "UPDATING")
         this.artistId = id
         viewModelScope.launch {
-            Log.d("ARTIST", "KICKING OFF")
             detailedArtistUiState = DetailedArtistUIState.Loading
             detailedArtistUiState = try {
                 Log.d("ARTIST", "OK")
@@ -60,8 +59,8 @@ class DetailedArtistViewModel(private val artistRepository: MusicianRepository):
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as VinylsApplication)
-                val albumRepository = application.container.albumRepository
-                DetailedAlbumViewModel(albumRepository = albumRepository)
+                val artistRepository = application.container.musicianRepository
+                DetailedArtistViewModel(artistRepository = artistRepository)
             }
         }
     }

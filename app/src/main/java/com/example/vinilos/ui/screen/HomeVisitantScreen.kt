@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vinilos.R
 import com.example.vinilos.data.model.Collector
-import com.example.vinilos.data.model.Musician
 import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.data.model.musician.Musician
 import com.example.vinilos.ui.component.BottomBarVisitor
@@ -87,7 +86,9 @@ fun HomeVisitant(
                 navigateTo = navigateTo
             )
             VinylsScreen.CollectorsVisitant.name -> Collectors()
-            VinylsScreen.ArtistsVisitant.name -> Artists()
+            VinylsScreen.ArtistsVisitant.name -> Artists(
+                navigateTo = navigateTo
+            )
             else -> HomeScreen(
                 albumsUiState = albumViewModel.albumsUiState,
                 collectorUIState = collectorViewModel.collectorUiState,

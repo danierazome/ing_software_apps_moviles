@@ -1,13 +1,10 @@
 package com.example.vinilos.data.model.musician
 
-import com.example.vinilos.data.model.album.Album
-
-data class DetailedArtist(
-    val id: Int,
-    val name: String,
-    val image: String,
+open class DetailedArtist(
     val description: String,
     val birthDate: String,
-    val albums: List<Album>,
+    val albumes:  List<Album>,
+    val comments: List<PerformerPrizes>,
 )
-data class Track(val id: Int, val duration: String, val name: String)
+data class Album(val id: Int, val name: String, val description: String, val genre: String)
+data class PerformerPrizes(val id: Int, val premiationDate: String)

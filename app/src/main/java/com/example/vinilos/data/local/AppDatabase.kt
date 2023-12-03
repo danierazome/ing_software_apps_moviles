@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.vinilos.data.local.dao.AlbumDao
 import com.example.vinilos.data.local.dao.CommentDao
-import com.example.vinilos.data.local.dao.MusicianDao
 import com.example.vinilos.data.local.dao.TrackDao
 import com.example.vinilos.data.local.entities.album.AlbumEntity
 import com.example.vinilos.data.local.entities.album.CommentEntity
@@ -19,7 +18,6 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun albumDao(): AlbumDao
     abstract fun trackDao(): TrackDao
     abstract fun commentDao(): CommentDao
-    abstract fun artistDao(): MusicianDao
 
 
     companion object {

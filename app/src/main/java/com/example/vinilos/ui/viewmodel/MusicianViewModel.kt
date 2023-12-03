@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.vinilos.VinylsApplication
-import com.example.vinilos.data.repository.MusicianRepository
+import com.example.vinilos.data.repository.IMusicianRepository
 import com.example.vinilos.data.model.musician.Musician
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -21,7 +21,7 @@ sealed interface MusicianUIState {
     object Error: MusicianUIState
 }
 
-class MusicianViewModel(private val musicianRepository: MusicianRepository): ViewModel() {
+class MusicianViewModel(private val musicianRepository: IMusicianRepository): ViewModel() {
 
     var musicianUIState: MusicianUIState by mutableStateOf(MusicianUIState.Loading)
         private set

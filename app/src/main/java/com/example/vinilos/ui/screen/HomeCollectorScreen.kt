@@ -30,7 +30,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vinilos.R
 import com.example.vinilos.data.model.Band
 import com.example.vinilos.data.model.Collector
-import com.example.vinilos.data.model.Musician
 import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.data.model.musician.Musician
 import com.example.vinilos.ui.component.BottomBarCollector
@@ -85,7 +84,7 @@ fun HomeCollector(
     ) { innerPadding ->
 
         when (bottomBarItemSelected) {
-            //VinylsScreen.AlbumsCollector.name -> Albums()
+            VinylsScreen.AlbumsCollector.name -> Albums(navigateTo=navigateTo)
             VinylsScreen.ArtistsCollector.name -> Collectors()
             VinylsScreen.New.name -> NewArtist()
             else -> HomeScreenCollector(

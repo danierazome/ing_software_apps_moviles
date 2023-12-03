@@ -11,6 +11,8 @@ import com.example.vinilos.data.mappers.asUIModel
 import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.data.model.album.DetailedAlbum
 import com.example.vinilos.data.network.dataSources.AlbumRemoteDataSource
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 interface IAlbumRepository {
     suspend fun getAlbums(): List<Album>
@@ -24,8 +26,19 @@ class AlbumRepository(
     private val commentDao: CommentDao
 ): IAlbumRepository {
 
+    private val albumsMutex = Mutex()
+    private var albums = emptyList<Album>()
+
     override suspend fun getAlbums(): List<Album> {
-        return albumRemoteDataSource.getAlbums()
+
+        Log.d("MUTEX", "1")
+        if (albums.isNotEmpty()) return albumsMutex.withLock { this.albums }
+        Log.d("MUTEX", "2")
+        albumsMutex.withLock {
+            this.albums = albumRemoteDataSource.getAlbums().map { it.asUIModel() }
+        }
+
+        return albumsMutex.withLock { this.albums }
     }
 
     override suspend fun getDetailedAlbum(id: Int): DetailedAlbum {
@@ -36,7 +49,7 @@ class AlbumRepository(
 
         val albumNetwork = albumRemoteDataSource.getDetailedAlbum(id)
 
-        insertDetailedAlbum(albumNetwork.asEntity())
+        albumDao.insert(albumEntity = albumNetwork.asEntity())
         albumNetwork.tracks
             .map { it.asEntity(albumNetwork.id) }
             .forEach { trackDao.insert(it) }
@@ -45,9 +58,5 @@ class AlbumRepository(
             .forEach { commentDao.insert(it) }
 
         return albumNetwork.asUIDetailedModel()
-    }
-
-    private suspend fun insertDetailedAlbum(albumEntity: AlbumEntity) {
-        albumDao.insert(albumEntity = albumEntity)
     }
 }
