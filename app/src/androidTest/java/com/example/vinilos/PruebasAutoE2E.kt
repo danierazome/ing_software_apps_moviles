@@ -9,6 +9,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performKeyInput
+import androidx.compose.ui.test.performTextInput
 import com.example.vinilos.ui.screen.VinylApp
 import com.example.vinilos.ui.theme.VinilosTheme
 
@@ -30,7 +32,7 @@ class E2ETests {
     // an activity
 
     @Test
-    fun Escenario01() {
+    fun scenario01() {
         // Start the app
         composeTestRule.setContent {
             VinilosTheme {
@@ -48,7 +50,7 @@ class E2ETests {
     }
 
     @Test
-    fun Escenario02() {
+    fun scenario02() {
         // Start the app
         composeTestRule.setContent {
             VinilosTheme {
@@ -66,7 +68,7 @@ class E2ETests {
     }
 
     @Test
-    fun Escenario03() {
+    fun scenario03() {
         // Start the app
         composeTestRule.setContent {
             VinilosTheme {
@@ -87,7 +89,7 @@ class E2ETests {
     }
 
     @Test
-    fun Escenario04() {
+    fun scenario04() {
         // Start the app
         composeTestRule.setContent {
             VinilosTheme {
@@ -108,7 +110,7 @@ class E2ETests {
 
     }
     @Test
-    fun Escenario05() {
+    fun scenario05() {
         // Start the app
         composeTestRule.setContent {
             VinilosTheme {
@@ -128,7 +130,7 @@ class E2ETests {
     }
 
     @Test
-    fun Escenario06() {
+    fun scenario06() {
         // Start the app
         composeTestRule.setContent {
             VinilosTheme {
@@ -144,12 +146,12 @@ class E2ETests {
         composeTestRule.onNodeWithText("SOY UN VISITANTE").performClick()
         composeTestRule.onNodeWithText("¡Bienvenido Visitante!").assertIsDisplayed()
         composeTestRule.onNodeWithText("Albums").performClick()
-        composeTestRule.onNodeWithText("elisa").performClick()
+        composeTestRule.onNodeWithText("elisa").assertIsDisplayed()
 
     }
 
     @Test
-    fun Escenario07() {
+    fun scenario07() {
         // Start the app
         composeTestRule.setContent {
             VinilosTheme {
@@ -165,7 +167,30 @@ class E2ETests {
         composeTestRule.onNodeWithText("SOY UN COLECCIONISTA").performClick()
         composeTestRule.onNodeWithText("¡Bienvenido Coleccionista!").assertIsDisplayed()
         composeTestRule.onNodeWithText("Albums").performClick()
-        composeTestRule.onNodeWithText("elisa").performClick()
+        composeTestRule.onNodeWithText("elisa").assertIsDisplayed()
+    }
+
+    @Test
+    fun scenario08() {
+        // Start the app
+        composeTestRule.setContent {
+            VinilosTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    VinylApp()
+                }
+            }
+        }
+
+        composeTestRule.onNodeWithText("SOY UN COLECCIONISTA").performClick()
+        composeTestRule.onNodeWithText("¡Bienvenido Coleccionista!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Prize").performClick()
+        composeTestRule.onNodeWithText("Nombre").performTextInput("Premio 01")
+        composeTestRule.onNodeWithText("Descripción").performTextInput("Alguna descripción")
+        composeTestRule.onNodeWithText("Organización").performTextInput("organizacion 01")
+
     }
 
 

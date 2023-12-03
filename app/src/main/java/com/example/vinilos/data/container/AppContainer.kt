@@ -13,7 +13,10 @@ import com.example.vinilos.data.network.apiServices.AlbumApiService
 import com.example.vinilos.data.network.apiServices.BandApiService
 import com.example.vinilos.data.network.apiServices.CollectorApiService
 import com.example.vinilos.data.network.apiServices.MusicianApiService
+import com.example.vinilos.data.network.apiServices.PrizeApiService
 import com.example.vinilos.data.network.dataSources.AlbumRemoteDataSource
+import com.example.vinilos.data.network.dataSources.PrizeRemoteDataSource
+import com.example.vinilos.data.repository.PrizeRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -24,6 +27,7 @@ interface AppContainer {
     val musicianRepository: MusicianRepository
     val collectorRepository: CollectorRepository
     val bandRepository: BandRepository
+    val prizeRepository: PrizeRepository
 }
 
 class DefaultAppContainer(private val context: Context): AppContainer {
@@ -76,7 +80,7 @@ class DefaultAppContainer(private val context: Context): AppContainer {
         NetworkCollectorRepository(retrofitCollectorService)
     }
 
-    //ALBUM
+    //BAND
 
     private val retrofitBandService: BandApiService by lazy {
         retrofit.create(BandApiService::class.java)
@@ -84,6 +88,20 @@ class DefaultAppContainer(private val context: Context): AppContainer {
 
     override val bandRepository: BandRepository by lazy {
         NetworkBandRepository(retrofitBandService)
+    }
+
+    //PRIZE
+
+    private val retrofitPrizeService: PrizeApiService by lazy {
+        retrofit.create(PrizeApiService::class.java)
+    }
+
+    private val prizeRemoteDataSource: PrizeRemoteDataSource by lazy {
+        PrizeRemoteDataSource(retrofitPrizeService)
+    }
+
+    override val prizeRepository: PrizeRepository by lazy {
+        PrizeRepository(prizeRemoteDataSource)
     }
 
 }

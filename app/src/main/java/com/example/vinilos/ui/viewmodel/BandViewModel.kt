@@ -1,5 +1,6 @@
 package com.example.vinilos.ui.viewmodel
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -39,6 +40,21 @@ class BandViewModel(private val bandRepository: BandRepository): ViewModel() {
             } catch (e: HttpException) {
                 BandUIState.Error
             }
+        }
+    }
+
+    fun savePrize(snackBarHostState: SnackbarHostState) {
+
+        viewModelScope.launch {
+            snackBarHostState.showSnackbar(message = "hola")
+//            try {
+//                prizeRepository.savePrize(prize=prize)
+//                Log.d("PRIZE", "PRIZE SAVE SUCCESSFULLY")
+//            } catch (e: IOException) {
+//                Log.d("PRIZE", e.toString())
+//            } catch (e: HttpException) {
+//                Log.d("PRIZE", e.toString())
+//            }
         }
     }
 

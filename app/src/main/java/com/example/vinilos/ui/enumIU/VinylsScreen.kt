@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LibraryMusic
 import androidx.compose.material.icons.filled.Login
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 
 
@@ -22,4 +23,5 @@ enum class VinylsScreen(val icon: ImageVector, val inBar: Boolean, val userType:
     ArtistsCollector(Icons.Filled.Person, true, UserType.Collector, "Artists"),
     New(Icons.Filled.Add, true, UserType.Collector, "New"),
     Album(Icons.Filled.LibraryMusic, false, UserType.None, "Album"),
+    Prize(Icons.Filled.Star, true, UserType.Collector, "Prize"),
 }
