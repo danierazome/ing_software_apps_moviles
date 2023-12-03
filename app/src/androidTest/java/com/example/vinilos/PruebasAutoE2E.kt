@@ -9,14 +9,11 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.performTextInput
 import com.example.vinilos.ui.screen.VinylApp
 import com.example.vinilos.ui.theme.VinilosTheme
-
-import org.junit.Test
-
 import org.junit.Rule
+import org.junit.Test
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -45,8 +42,8 @@ class E2ETests {
             }
         }
 
-        composeTestRule.onNodeWithText("SOY UN VISITANTE").performClick()
-        composeTestRule.onNodeWithText("¡Bienvenido Visitante!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("I AM VISITANT").performClick()
+        composeTestRule.onNodeWithText("Welcome Visitant").assertIsDisplayed()
     }
 
     @Test
@@ -63,8 +60,8 @@ class E2ETests {
             }
         }
 
-        composeTestRule.onNodeWithText("SOY UN COLECCIONISTA").performClick()
-        composeTestRule.onNodeWithText("¡Bienvenido Coleccionista!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("I AM COLLECTOR").performClick()
+        composeTestRule.onNodeWithText("Welcome Collector").assertIsDisplayed()
     }
 
     @Test
@@ -81,11 +78,11 @@ class E2ETests {
             }
         }
 
-        composeTestRule.onNodeWithText("SOY UN VISITANTE").performClick()
-        composeTestRule.onNodeWithText("¡Bienvenido Visitante!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("I AM VISITANT").performClick()
+        composeTestRule.onNodeWithText("Welcome Visitant").assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("GO BACK BUTTON").performClick()
-        composeTestRule.onNodeWithText("SOY UN COLECCIONISTA").performClick()
-        composeTestRule.onNodeWithText("¡Bienvenido Coleccionista!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("I AM COLLECTOR").performClick()
+        composeTestRule.onNodeWithText("Welcome Collector").assertIsDisplayed()
     }
 
     @Test
@@ -102,11 +99,11 @@ class E2ETests {
             }
         }
 
-        composeTestRule.onNodeWithText("SOY UN VISITANTE").performClick()
-        composeTestRule.onNodeWithText("¡Bienvenido Visitante!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("I AM VISITANT").performClick()
+        composeTestRule.onNodeWithText("Welcome Visitant").assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("GO BACK BUTTON").performClick()
-        composeTestRule.onNodeWithText("SOY UN VISITANTE").performClick()
-        composeTestRule.onNodeWithText("¡Bienvenido Visitante!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("I AM VISITANT").performClick()
+        composeTestRule.onNodeWithText("Welcome Visitant").assertIsDisplayed()
 
     }
     @Test
@@ -123,10 +120,10 @@ class E2ETests {
             }
         }
 
-        composeTestRule.onNodeWithText("SOY UN VISITANTE").performClick()
-        composeTestRule.onNodeWithText("¡Bienvenido Visitante!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("I AM VISITANT").performClick()
+        composeTestRule.onNodeWithText("Welcome Visitant").assertIsDisplayed()
         composeTestRule.onNodeWithText("Artists").performClick()
-        composeTestRule.onNodeWithText("Mis Artistas").assertIsDisplayed()
+        composeTestRule.onNodeWithText("My artists").assertIsDisplayed()
     }
 
     @Test
@@ -143,10 +140,10 @@ class E2ETests {
             }
         }
 
-        composeTestRule.onNodeWithText("SOY UN VISITANTE").performClick()
-        composeTestRule.onNodeWithText("¡Bienvenido Visitante!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("I AM VISITANT").performClick()
+        composeTestRule.onNodeWithText("Welcome Visitant").assertIsDisplayed()
         composeTestRule.onNodeWithText("Albums").performClick()
-        composeTestRule.onNodeWithText("elisa").assertIsDisplayed()
+        composeTestRule.onNodeWithText("My albums").assertIsDisplayed()
 
     }
 
@@ -164,10 +161,10 @@ class E2ETests {
             }
         }
 
-        composeTestRule.onNodeWithText("SOY UN COLECCIONISTA").performClick()
-        composeTestRule.onNodeWithText("¡Bienvenido Coleccionista!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("I AM COLLECTOR").performClick()
+        composeTestRule.onNodeWithText("Welcome Collector").assertIsDisplayed()
         composeTestRule.onNodeWithText("Albums").performClick()
-        composeTestRule.onNodeWithText("elisa").assertIsDisplayed()
+        composeTestRule.onNodeWithText("My albums").assertIsDisplayed()
     }
 
     @Test
@@ -184,12 +181,12 @@ class E2ETests {
             }
         }
 
-        composeTestRule.onNodeWithText("SOY UN COLECCIONISTA").performClick()
-        composeTestRule.onNodeWithText("¡Bienvenido Coleccionista!").assertIsDisplayed()
+        composeTestRule.onNodeWithText("I AM COLLECTOR").performClick()
+        composeTestRule.onNodeWithText("Welcome Collector").assertIsDisplayed()
         composeTestRule.onNodeWithText("Prize").performClick()
-        composeTestRule.onNodeWithText("Nombre").performTextInput("Premio 01")
-        composeTestRule.onNodeWithText("Descripción").performTextInput("Alguna descripción")
-        composeTestRule.onNodeWithText("Organización").performTextInput("organizacion 01")
+        composeTestRule.onNodeWithText("Name").performTextInput("Premio 01")
+        composeTestRule.onNodeWithText("Description").performTextInput("Alguna descripción")
+        composeTestRule.onNodeWithText("Organization").performTextInput("organizacion 01")
 
     }
 
