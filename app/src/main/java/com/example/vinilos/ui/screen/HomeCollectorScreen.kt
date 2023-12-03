@@ -12,10 +12,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -68,9 +71,13 @@ fun HomeCollector(
     val banViewModel: BandViewModel =
         viewModel(factory = BandViewModel.Factory)
 
+    val snackBarHostState = remember { SnackbarHostState() }
+
     Scaffold(
         topBar = {
-            TopBar(title = "¡Bienvenido Coleccionista!", navigateUp = navigateUp)
+            TopBar(
+                title = findTopBarTitleCollector(bottomBarItemSelected),
+                navigateUp = navigateUp)
         },
         bottomBar = {
 
@@ -80,10 +87,14 @@ fun HomeCollector(
                     bottomBarItemSelected = it
                 }
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackBarHostState)
         }
     ) { innerPadding ->
 
         when (bottomBarItemSelected) {
+            VinylsScreen.Prize.name -> PrizeScreen(snackBarHostState = snackBarHostState)
             VinylsScreen.AlbumsCollector.name -> Albums(navigateTo=navigateTo)
             VinylsScreen.ArtistsCollector.name -> Collectors(navigateTo=navigateTo)
             VinylsScreen.New.name -> NewArtist()
@@ -331,5 +342,13 @@ fun BandCarouselCollectorItem(band: Band, modifier: Modifier){
             maxLines = 2,
             modifier = Modifier.width(100.dp)
         )
+    }
+}
+
+fun findTopBarTitleCollector(currentScreen: String): String {
+    return if (currentScreen == VinylsScreen.HomeCollector.name) {
+        "¡Bienvenido Coleccionista!"
+    } else {
+        ""
     }
 }
