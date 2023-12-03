@@ -11,7 +11,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.vinilos.VinylsApplication
 import com.example.vinilos.data.model.musician.Musician
-import com.example.vinilos.data.repository.IMusicianRepository
+import com.example.vinilos.data.repository.MusicianRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -23,7 +23,7 @@ sealed interface DetailedArtistUIState {
     object Error: DetailedArtistUIState
 }
 
-class DetailedArtistViewModel(private val artistRepository: IMusicianRepository): ViewModel() {
+class DetailedArtistViewModel(private val artistRepository: MusicianRepository): ViewModel() {
 
     var detailedArtistUiState: DetailedArtistUIState by mutableStateOf(DetailedArtistUIState.Loading)
         private set

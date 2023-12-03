@@ -11,9 +11,13 @@ import com.example.vinilos.data.network.apiServices.AlbumApiService
 import com.example.vinilos.data.network.apiServices.BandApiService
 import com.example.vinilos.data.network.apiServices.CollectorApiService
 import com.example.vinilos.data.network.apiServices.MusicianApiService
+import com.example.vinilos.data.network.apiServices.PrizeApiService
 import com.example.vinilos.data.network.dataSources.AlbumRemoteDataSource
-import com.example.vinilos.data.repository.IMusicianRepository
 import com.example.vinilos.data.repository.NetworkMusicianRepository
+import com.example.vinilos.data.network.dataSources.CollectorRemoteDataSource
+import com.example.vinilos.data.network.dataSources.PrizeRemoteDataSource
+import com.example.vinilos.data.repository.MusicianRepository
+import com.example.vinilos.data.repository.PrizeRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -21,9 +25,10 @@ import retrofit2.Retrofit
 
 interface AppContainer {
     val albumRepository: AlbumRepository
-    val musicianRepository: IMusicianRepository
+    val musicianRepository: MusicianRepository
     val collectorRepository: CollectorRepository
     val bandRepository: BandRepository
+    val prizeRepository: PrizeRepository
 }
 
 class DefaultAppContainer(private val context: Context): AppContainer {
@@ -56,7 +61,7 @@ class DefaultAppContainer(private val context: Context): AppContainer {
     override val albumRepository: AlbumRepository by lazy {
         AlbumRepository(albumRemoteDataSource, database.albumDao(), database.trackDao(), database.commentDao())
     }
-    override val musicianRepository: IMusicianRepository by lazy {
+    override val musicianRepository: MusicianRepository by lazy {
         NetworkMusicianRepository(retrofitMusicianService)
     }
 
@@ -72,11 +77,15 @@ class DefaultAppContainer(private val context: Context): AppContainer {
         retrofit.create(CollectorApiService::class.java)
     }
 
-    override val collectorRepository: CollectorRepository by lazy {
-        NetworkCollectorRepository(retrofitCollectorService)
+    private val collectorRemoteDataSource: CollectorRemoteDataSource by lazy {
+        CollectorRemoteDataSource(retrofitCollectorService)
     }
 
-    //ALBUM
+    override val collectorRepository: CollectorRepository by lazy {
+        NetworkCollectorRepository(collectorRemoteDataSource, database.collectorDao(), database.performerDao(), database.collectorCommentDao())
+    }
+
+    //BAND
 
     private val retrofitBandService: BandApiService by lazy {
         retrofit.create(BandApiService::class.java)
@@ -84,6 +93,20 @@ class DefaultAppContainer(private val context: Context): AppContainer {
 
     override val bandRepository: BandRepository by lazy {
         NetworkBandRepository(retrofitBandService)
+    }
+
+    //PRIZE
+
+    private val retrofitPrizeService: PrizeApiService by lazy {
+        retrofit.create(PrizeApiService::class.java)
+    }
+
+    private val prizeRemoteDataSource: PrizeRemoteDataSource by lazy {
+        PrizeRemoteDataSource(retrofitPrizeService)
+    }
+
+    override val prizeRepository: PrizeRepository by lazy {
+        PrizeRepository(prizeRemoteDataSource)
     }
 
 }

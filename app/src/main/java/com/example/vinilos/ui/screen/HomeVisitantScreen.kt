@@ -1,8 +1,8 @@
 package com.example.vinilos.ui.screen
 
 
-import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,7 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -25,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -54,12 +54,8 @@ fun HomeVisitant(
     navigateUp: () -> Unit = {},
     modifier: Modifier = Modifier) {
     var screenSelected by rememberSaveable { mutableStateOf(VinylsScreen.HomeVisitant.name) }
-    var idObjectSelected by rememberSaveable { mutableIntStateOf(0) }
 
-    val setIdObject: (Int) -> Unit = {idObjectSelected = it }
     val setScreenSelected: (String) -> Unit = {screenSelected = it }
-
-    Log.d("HOME SCREEN SELECTE", screenSelected)
 
     val albumViewModel: AlbumViewModel =
         viewModel(factory = AlbumViewModel.Factory)
@@ -70,9 +66,12 @@ fun HomeVisitant(
     val musicianViewModel: MusicianViewModel =
         viewModel(factory = MusicianViewModel.Factory)
 
+
     Scaffold(
         topBar = {
-                 TopBar(title = "¡Bienvenido Visitante!", navigateUp = navigateUp)
+                 TopBar(
+                     title = if (onHomeScreen(screenSelected)) stringResource(id = R.string.greeting_visitant) else "",
+                     navigateUp = navigateUp)
         },
         bottomBar = {
             BottomBarVisitor(
@@ -85,7 +84,7 @@ fun HomeVisitant(
             VinylsScreen.AlbumsVisitant.name -> Albums(
                 navigateTo = navigateTo
             )
-            VinylsScreen.CollectorsVisitant.name -> Collectors()
+            VinylsScreen.CollectorsVisitant.name -> Collectors(navigateTo = navigateTo)
             VinylsScreen.ArtistsVisitant.name -> Artists(
                 navigateTo = navigateTo
             )
@@ -94,7 +93,8 @@ fun HomeVisitant(
                 collectorUIState = collectorViewModel.collectorUiState,
                 musicianUIState = musicianViewModel.musicianUIState,
                 randomAvatar = {collectorViewModel.randomAvatar()},
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
+                navigateTo = navigateTo,
             )
         }
     }
@@ -109,7 +109,8 @@ fun HomeScreen(
     collectorUIState: CollectorUIState,
     musicianUIState: MusicianUIState,
     randomAvatar: () -> String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateTo: (String) -> Unit,
 ) {
 
     val componentModifier = Modifier.padding(10.dp)
@@ -147,7 +148,7 @@ fun HomeScreen(
                 is CollectorUIState.Loading -> LoadingData()
                 is CollectorUIState.Success -> CollectorComponent(
                     collectors = collectorUIState.collectors,
-                    randomAvatar = randomAvatar)
+                    randomAvatar = randomAvatar, navigateTo = navigateTo)
                 is CollectorUIState.Error -> ErrorOnRetrieveData("Coleccionistas no disponibles")
             }
         }
@@ -163,7 +164,7 @@ fun AlbumsComponent(albums: List<Album>, modifier: Modifier = Modifier) {
     ){
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Albums mas populares",
+            text = stringResource(id = R.string.most_popular_albums),
             style = MaterialTheme.typography.titleMedium
         )
         LazyRow {
@@ -204,7 +205,7 @@ fun MusiciansComponent(musicians: List<Musician>, modifier: Modifier = Modifier)
     ){
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Artistas en tendencia",
+            text = stringResource(id = R.string.artist_on_trend),
             style = MaterialTheme.typography.titleMedium
         )
         LazyRow {
@@ -242,33 +243,37 @@ fun MusicianCarouselItem(musician: Musician, modifier: Modifier = Modifier) {
 fun CollectorComponent(
     collectors: List<Collector>,
     randomAvatar: () -> kotlin.String,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier,
+    navigateTo: (String) -> Unit) {
 
     Column (
         modifier = modifier.padding(bottom = 100.dp)
     ){
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Coleccionistas reconocidos",
+            text = stringResource(id = R.string.important_collectors),
             style = MaterialTheme.typography.titleMedium
         )
         LazyRow {
             items(collectors) { collector ->
-                CollectorsCarouselItem(collector = collector, avatar = randomAvatar.invoke())
+                CollectorsCarouselItem(collector = collector, avatar = randomAvatar.invoke(), modifier, navigateTo)
             }
         }
     }
 }
 
 @Composable
-fun CollectorsCarouselItem(collector: Collector, avatar: String, modifier: Modifier = Modifier) {
+fun CollectorsCarouselItem(collector: Collector, avatar: String, modifier: Modifier = Modifier,
+                           navigateTo: (String) -> Unit) {
 
     val imageModifier = Modifier
         .size(dimensionResource(R.dimen.image_small_size))
         .padding(dimensionResource(R.dimen.padding_small))
         .clip(RoundedCornerShape(25.dp))
 
-    Column {
+    Column(modifier = modifier.clickable {
+        navigateTo("${VinylsScreen.CollectorsVisitant.name}/${collector.id}")
+    }) {
         CroppedImage(image = avatar, modifier = imageModifier)
         Text(
             text = collector.name,
@@ -279,4 +284,9 @@ fun CollectorsCarouselItem(collector: Collector, avatar: String, modifier: Modif
             modifier = Modifier.width(100.dp)
         )
     }
+}
+
+
+fun onHomeScreen(currentScreen: String): Boolean {
+    return currentScreen == VinylsScreen.HomeVisitant.name
 }

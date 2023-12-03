@@ -8,9 +8,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.vinilos.R
 import com.example.vinilos.ui.component.ErrorOnRetrieveData
 import com.example.vinilos.ui.component.LoadingData
 import com.example.vinilos.ui.viewmodel.CollectorUIState
@@ -18,7 +20,8 @@ import com.example.vinilos.ui.viewmodel.CollectorViewModel
 
 @Composable
 @Preview
-fun Collectors(modifier: Modifier = Modifier) {
+fun Collectors(modifier: Modifier = Modifier,
+               navigateTo: (String) -> Unit,) {
     val collectorViewModel: CollectorViewModel =
         viewModel(factory = CollectorViewModel.Factory)
 
@@ -26,7 +29,7 @@ fun Collectors(modifier: Modifier = Modifier) {
 
     Column {
         Text(
-            text = "Collecionistas en Tendencia",
+            text = stringResource(id = R.string.collectors_on_trend),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .padding(top = 70.dp, bottom = 20.dp)
@@ -43,7 +46,7 @@ fun Collectors(modifier: Modifier = Modifier) {
                     val sortedCollectors = collectors.sortedByDescending { it.comments?.size }
                     sortedCollectors.take(3).toTypedArray().forEach { collector ->
                         item {
-                            CollectorsCarouselItem(collector = collector, avatar = collectorViewModel.randomAvatar())
+                            CollectorsCarouselItem(collector = collector, avatar = collectorViewModel.randomAvatar(), navigateTo = navigateTo)
                         }
                     }
                 }
@@ -56,7 +59,7 @@ fun Collectors(modifier: Modifier = Modifier) {
         }
 
         Text(
-            text = "Demás Collecionistas",
+            text = stringResource(id = R.string.collectors),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .padding(top = 70.dp, bottom = 20.dp)
@@ -74,7 +77,7 @@ fun Collectors(modifier: Modifier = Modifier) {
                     val sortedCollectors = collectors.sortedByDescending { it.comments?.size }
                     sortedCollectors.drop(3).toTypedArray().forEach { collector ->
                         item {
-                            CollectorsCarouselItem(collector = collector, avatar = collectorViewModel.randomAvatar())
+                            CollectorsCarouselItem(collector = collector, avatar = collectorViewModel.randomAvatar(), navigateTo = navigateTo)
                         }
                     }
                 }

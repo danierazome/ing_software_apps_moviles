@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vinilos.R
 import com.example.vinilos.data.model.musician.Album
-import com.example.vinilos.data.model.musician.DetailedArtist
 import com.example.vinilos.data.model.musician.Musician
 import com.example.vinilos.ui.component.CroppedImage
 import com.example.vinilos.ui.component.ErrorOnRetrieveData
@@ -101,7 +100,7 @@ fun DetailedArtistScreen(detailedArtist: Musician, modifier: Modifier = Modifier
             }
 
             item {
-                AlbumInfo(detailedArtist = detailedArtist.)
+                AlbumInfo(detailedArtist = detailedArtist)
             }
 
         }
@@ -109,7 +108,7 @@ fun DetailedArtistScreen(detailedArtist: Musician, modifier: Modifier = Modifier
 }
 
 @Composable
-fun AlbumInfo(detailedArtist: DetailedArtist) {
+fun AlbumInfo(detailedArtist: Musician) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp

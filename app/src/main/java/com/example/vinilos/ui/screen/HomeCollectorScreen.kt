@@ -12,16 +12,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -68,9 +72,13 @@ fun HomeCollector(
     val banViewModel: BandViewModel =
         viewModel(factory = BandViewModel.Factory)
 
+    val snackBarHostState = remember { SnackbarHostState() }
+
     Scaffold(
         topBar = {
-            TopBar(title = "¡Bienvenido Coleccionista!", navigateUp = navigateUp)
+            TopBar(
+                title = if (onHomeScreenCollector(bottomBarItemSelected)) stringResource(id = R.string.greeting_collector) else "",
+                navigateUp = navigateUp)
         },
         bottomBar = {
 
@@ -80,12 +88,16 @@ fun HomeCollector(
                     bottomBarItemSelected = it
                 }
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackBarHostState)
         }
     ) { innerPadding ->
 
         when (bottomBarItemSelected) {
+            VinylsScreen.Prize.name -> PrizeScreen(snackBarHostState = snackBarHostState)
             VinylsScreen.AlbumsCollector.name -> Albums(navigateTo=navigateTo)
-            VinylsScreen.ArtistsCollector.name -> Collectors()
+            VinylsScreen.ArtistsCollector.name -> Collectors(navigateTo=navigateTo)
             VinylsScreen.New.name -> NewArtist()
             else -> HomeScreenCollector(
                 albumsUiState = albumViewModel.albumsUiState,
@@ -174,7 +186,7 @@ fun AlbumsCollectorComponent(albums: List<Album>, modifier: Modifier = Modifier)
     ){
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Albums mas populares",
+            text = stringResource(id = R.string.most_popular_albums),
             style = MaterialTheme.typography.titleMedium
         )
         LazyRow {
@@ -214,7 +226,7 @@ fun MusiciansCollectorComponent(musicians: List<Musician>, modifier: Modifier = 
     ){
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Artistas en tendencia",
+            text = stringResource(id = R.string.artist_on_trend),
             style = MaterialTheme.typography.titleMedium
         )
         LazyRow {
@@ -259,7 +271,7 @@ fun CollectorCollectorComponent(
     ){
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Coleccionistas reconocidos",
+            text = stringResource(id = R.string.important_collectors),
             style = MaterialTheme.typography.titleMedium
         )
         LazyRow {
@@ -302,7 +314,7 @@ fun BandCollectorComponente (
     ) {
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Bandas del momento",
+            text = stringResource(id = R.string.bands_on_fire),
             style = MaterialTheme.typography.titleMedium
         )
         LazyRow {
@@ -332,4 +344,7 @@ fun BandCarouselCollectorItem(band: Band, modifier: Modifier){
             modifier = Modifier.width(100.dp)
         )
     }
+}
+fun onHomeScreenCollector(currentScreen: String): Boolean {
+    return currentScreen == VinylsScreen.HomeCollector.name
 }
