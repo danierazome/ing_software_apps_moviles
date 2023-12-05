@@ -2,7 +2,6 @@ package com.example.vinilos.albumFakeData
 
 import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.data.network.models.albumNetwork.AlbumNetwork
-import com.example.vinilos.data.network.models.albumNetwork.CommentNetwork
 
 
 object AlbumFakeData {

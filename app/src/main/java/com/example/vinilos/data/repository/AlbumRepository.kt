@@ -1,6 +1,5 @@
 package com.example.vinilos.data.repository
 
-import com.example.vinilos.data.mappers.asEntity
 import com.example.vinilos.data.local.dao.AlbumDao
 import com.example.vinilos.data.local.dao.CommentDao
 import com.example.vinilos.data.local.dao.TrackDao
@@ -11,10 +10,14 @@ import com.example.vinilos.data.model.album.DetailedAlbum
 import com.example.vinilos.data.network.dataSources.AlbumRemoteDataSource
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import com.example.vinilos.data.mappers.asEntity
+import com.example.vinilos.data.mappers.asNetworkModel
+import com.example.vinilos.data.network.models.network.AlbumNetwork
 
 interface IAlbumRepository {
     suspend fun getAlbums(): List<Album>
     suspend fun getDetailedAlbum(id: Int): DetailedAlbum
+    suspend fun saveAlbum(album: Album)
 }
 
 class AlbumRepository(
@@ -52,5 +55,10 @@ class AlbumRepository(
             .forEach { commentDao.insert(it) }
 
         return albumNetwork.asUIDetailedModel()
+    }
+
+    override suspend fun saveAlbum(album: Album) {
+        println("vinilos - IAlbumRepository: "+album.toString())
+        return albumRemoteDataSource.saveAlbum(album=album.asNetworkModel()        )
     }
 }

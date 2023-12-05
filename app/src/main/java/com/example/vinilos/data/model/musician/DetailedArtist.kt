@@ -6,5 +6,12 @@ open class DetailedArtist(
     val albumes:  List<Album>,
     val comments: List<PerformerPrizes>,
 )
-data class Album(val id: Int, val name: String, val description: String, val genre: String)
+data class Album(
+    val name: String,
+    val cover: String,
+    val releaseDate: String,
+    val description: String,
+    val genre: String,
+    val recordLabel: String)
+
 data class PerformerPrizes(val id: Int, val premiationDate: String)

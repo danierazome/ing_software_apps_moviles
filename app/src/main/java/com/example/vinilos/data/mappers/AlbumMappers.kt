@@ -17,7 +17,10 @@ fun AlbumNetwork.asEntity() = AlbumEntity(
     id = id,
     cover = cover,
     name = name,
-    releaseDate = releaseDate
+    releaseDate = releaseDate,
+    description = description,
+    genre = genre,
+    recordLabel = recordLabel
 )
 
 fun TrackNetwork.asEntity(albumId: Int) = TrackEntity(
@@ -81,5 +84,24 @@ fun CommentEntity.asUIModel() = Comment(
 fun AlbumNetwork.asUIModel() = Album(
     id = id,
     cover = cover,
-    name = name
+    name = name,
+    releaseDate = releaseDate,
+    description = description,
+    genre = genre,
+    recordLabel = recordLabel,
+    tracks = listOf(),
+    comments = listOf()
+)
+
+
+fun Album.asNetworkModel() = AlbumNetwork(
+    id = id,
+    name = name,
+    cover = cover,
+    releaseDate = releaseDate,
+    description = description,
+    genre = genre,
+    recordLabel = recordLabel,
+    tracks = listOf(),
+    comments = listOf(),
 )

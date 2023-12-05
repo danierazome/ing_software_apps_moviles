@@ -25,6 +25,13 @@
     <string name="prize_org">Organización</string>
     <string name="prize_save">Guardar</string>
 
+    <string name="new_album">Nuevo Album</string>
+    <string name="album_name">Nombre</string>
+    <string name="album_cover">Imagen</string>
+    <string name="album_description">Descripción</string>
+    <string name="album_releaseDate">Fecha lanzamiento</string>
+    <string name="album_recordLabel">Casa disquera</string>
+    <string name="album_genre">Género</string>
 
     <dimen name="padding_small_int">16</dimen>
     <dimen name="padding_small">8dp</dimen>

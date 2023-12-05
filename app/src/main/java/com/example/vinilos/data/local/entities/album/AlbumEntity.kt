@@ -10,6 +10,9 @@ data class AlbumEntity(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "cover") val cover: String,
     @ColumnInfo(name = "releaseDate") val releaseDate: String,
+    @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "genre") val genre: String,
+    @ColumnInfo(name = "recordLabel") val recordLabel: String,
 )
 
 @Entity(tableName = "comment")
