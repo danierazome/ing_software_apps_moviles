@@ -43,7 +43,7 @@ class PrizeViewModel(private val prizeRepository: PrizeRepository): ViewModel() 
                         )
                     )
                     snackBarHostState.showSnackbar(
-                        message = "Premio guardado exitozamente")
+                        message = "Premio guardado exitosamente")
                 } catch (e: IOException) {
                     snackBarHostState.showSnackbar(
                         message = "Error al guardar el premio")

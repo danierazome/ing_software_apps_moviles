@@ -24,7 +24,7 @@ DatePickerDialog.OnDateSetListener{
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         // return new DatePickerDialog instance
-        return DatePickerDialog(MainActivity as Context, this, year, month, day)
+        return DatePickerDialog(this as Context as Context, this, year, month, day)
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {

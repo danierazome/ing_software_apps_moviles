@@ -7,17 +7,19 @@ import com.example.vinilos.data.mappers.asUIDetailedModel
 import com.example.vinilos.data.mappers.asUIModel
 import com.example.vinilos.data.model.album.Album
 import com.example.vinilos.data.model.album.DetailedAlbum
+import com.example.vinilos.data.model.album.TrackRequest
 import com.example.vinilos.data.network.dataSources.AlbumRemoteDataSource
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import com.example.vinilos.data.mappers.asEntity
 import com.example.vinilos.data.mappers.asNetworkModel
+import com.example.vinilos.data.network.models.network.AddTrackRequest
 import com.example.vinilos.data.network.models.network.AlbumNetwork
 
 interface IAlbumRepository {
     suspend fun getAlbums(): List<Album>
     suspend fun getDetailedAlbum(id: Int): DetailedAlbum
-    suspend fun saveAlbum(album: Album)
+    suspend fun saveAlbum(album: com.example.vinilos.data.model.musician.Album): Album
 }
 
 class AlbumRepository(
@@ -57,8 +59,18 @@ class AlbumRepository(
         return albumNetwork.asUIDetailedModel()
     }
 
-    override suspend fun saveAlbum(album: Album) {
-        println("vinilos - IAlbumRepository: "+album.toString())
-        return albumRemoteDataSource.saveAlbum(album=album.asNetworkModel()        )
+    override suspend fun saveAlbum(album: com.example.vinilos.data.model.musician.Album): Album {
+        val albumNetwork = albumRemoteDataSource.saveAlbum(album = album.asNetworkModel())
+        return albumNetwork.asUIModel()
+    }
+        
+    suspend fun addTrackToAlbum(albumId: Int, name: String, duration: String): TrackRequest {
+        try {
+            val request = AddTrackRequest(name, duration)
+            val trackRequest = albumRemoteDataSource.addTrackAlbum(albumId, request)
+            return trackRequest.asUIModel()
+        } catch (e: Exception) {
+            throw e
+        }
     }
 }

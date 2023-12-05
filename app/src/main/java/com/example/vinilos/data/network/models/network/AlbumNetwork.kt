@@ -20,3 +20,6 @@ data class CommentNetwork(val id: Int, val description: String, val rating: Int)
 
 @Serializable
 data class TrackNetwork(val id: Int, val duration: String, val name: String)
+
+@Serializable
+data class AddTrackRequest(val name: String, val duration: String)

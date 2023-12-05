@@ -19,7 +19,7 @@ import com.example.vinilos.data.local.entities.album.TrackEntity
 
 @Database(
     entities = [AlbumEntity::class, TrackEntity::class, CommentEntity::class, CollectorEntity::class, PerformersEntity::class, CollectorCommentEntity::class],
-    version = 2)
+    version = 3)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun albumDao(): AlbumDao
     abstract fun trackDao(): TrackDao

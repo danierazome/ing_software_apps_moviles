@@ -1,27 +1,31 @@
 package com.example.vinilos.ui.viewmodel
 
+import androidx.compose.material3.SnackbarDuration.Short
+import androidx.compose.material3.SnackbarDuration.Long
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.vinilos.VinylsApplication
-import com.example.vinilos.data.repository.AlbumRepository
-import java.util.Calendar
-import androidx.lifecycle.viewModelScope
-import com.example.vinilos.data.model.album.Album
+
 import com.example.vinilos.data.model.album.Comment
 import com.example.vinilos.data.model.album.Track
+import com.example.vinilos.data.model.musician.Album
+import com.example.vinilos.data.repository.AlbumRepository
 import com.example.vinilos.ui.utils.validateInput
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
+import java.util.Calendar
 
 
 class NewAlbumViewModel(private val albumRepository: AlbumRepository): ViewModel() {
+
     var name: String by mutableStateOf("")
     var cover: String by mutableStateOf("")
     var description: String by mutableStateOf("")
@@ -64,29 +68,26 @@ class NewAlbumViewModel(private val albumRepository: AlbumRepository): ViewModel
 
         viewModelScope.launch {
             val (areValid, message) = validateInputs()
-            println("vinilos - "+areValid)
-            println("vinilos - "+message)
             if (!areValid) {
                 snackBarHostState.showSnackbar(
-                    message = message)
+                    message,"label", false, Short)
             }else {
                 try {
-                    println("vinilos - albumRepository")
                     albumRepository.saveAlbum(
                         album = Album(
-                            id = 0,
                             name= name,
                             cover = cover,
                             description = description,
                             releaseDate = releaseDate,
                             genre = genre,
-                            recordLabel = recordLabel,
-                            tracks = tracks,
-                            comments = comments,
+                            recordLabel = recordLabel
                             )
                     )
                     snackBarHostState.showSnackbar(
-                        message = "Album guardado exitosamente")
+                        "Album guardado exitosamente",
+                        "label",
+                         false,
+                        Long)
                 } catch (e: IOException) {
                     snackBarHostState.showSnackbar(
                         message = "Error al guardar el album")

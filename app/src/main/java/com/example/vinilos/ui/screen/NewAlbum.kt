@@ -77,6 +77,7 @@ fun NewAlbum(snackBarHostState: SnackbarHostState, modifier: Modifier = Modifier
                     newAlbumViewModel.releaseDate = newAlbumViewModel.releaseDate+ "/"
             } ,
             label = { Text(stringResource(id = R.string.album_releaseDate)) },
+            placeholder = { Text(("DD/MM/YYYY")) },
             singleLine = false,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         )

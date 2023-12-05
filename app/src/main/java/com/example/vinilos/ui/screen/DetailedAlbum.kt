@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -39,6 +40,14 @@ import androidx.compose.ui.platform.testTag
 import com.example.vinilos.data.model.album.Comment
 import com.example.vinilos.data.model.album.Track
 
+import androidx.compose.material3.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.TextFieldValue
+import com.example.vinilos.ui.component.AddTrackSuccessfully
+
 @Composable
 fun DetailedAlbum(id: Int, navigateUp: () -> Unit = {}, modifier: Modifier = Modifier) {
 
@@ -63,6 +72,7 @@ fun DetailedAlbum(id: Int, navigateUp: () -> Unit = {}, modifier: Modifier = Mod
             is DetailedAlbumUIState.Error -> ErrorOnRetrieveData("Album no disponible")
             is DetailedAlbumUIState.Success -> DetailedAlbumScreen(
                 detailedAlbum = detailedAlbumUiState.album, modifier = modifier.padding(innerPadding))
+            is DetailedAlbumUIState.SuccessAddTrack -> AddTrackSuccessfully("La canción se agregó exitosamente.")
         }
     }
 
@@ -75,6 +85,10 @@ fun DetailedAlbumScreen(detailedAlbum: DetailedAlbum, modifier: Modifier = Modif
         .size(dimensionResource(R.dimen.image_large_size))
         .padding(dimensionResource(R.dimen.padding_small))
         .clip(RoundedCornerShape(50.dp))
+
+    val showDialog = remember { mutableStateOf(false) }
+    val detailedAlbumViewModel: DetailedAlbumViewModel = viewModel(factory = DetailedAlbumViewModel.Factory)
+
 
     Box(
         modifier = Modifier
@@ -99,9 +113,30 @@ fun DetailedAlbumScreen(detailedAlbum: DetailedAlbum, modifier: Modifier = Modif
                 AlbumComments(detailedAlbum = detailedAlbum)
             }
 
+            item {
+                FloatingActionButton(
+                    onClick = { showDialog.value = true },
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.BottomEnd)
+                ) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add Track")
+                }
+            }
+            }
+        if (showDialog.value) {
+            AddTrackDialog(
+                onDismiss = { showDialog.value = false },
+                onAddTrack = { trackName, trackDuration ->
+                    detailedAlbumViewModel.addTrackAlbum(detailedAlbum.id, trackName, trackDuration)
+                    println("Track Name: $trackName, Duration: $trackDuration")
+                    showDialog.value = false
+                }
+            )
+        }
         }
     }
-}
+
 
 // -------------> TRACK FRAGMENT
 @Composable
@@ -115,7 +150,9 @@ fun AlbumTracks(detailedAlbum: DetailedAlbum) {
             .fillMaxWidth()
 
     ) {
-        Text(text = "Tracks", modifier = Modifier.padding(5.dp).testTag("Tracks"), style = MaterialTheme.typography.titleMedium)
+        Text(text = "Tracks", modifier = Modifier
+            .padding(5.dp)
+            .testTag("Tracks"), style = MaterialTheme.typography.titleMedium)
         detailedAlbum.tracks.forEach{TrackItem(track = it)}
     }
 }
@@ -194,4 +231,51 @@ fun RatingStar(isStarRated: Boolean) {
             imageVector = Icons.Outlined.Star, 
             contentDescription = "NO RATED", )
     }
+}
+
+@Composable
+fun AddTrackDialog(
+    onDismiss: () -> Unit,
+    onAddTrack: (trackName: String, trackDuration: String) -> Unit
+) {
+    var trackName by remember { mutableStateOf(TextFieldValue()) }
+    var trackDuration by remember { mutableStateOf(TextFieldValue()) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Add Track") },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    val name = trackName.text
+                    val duration = trackDuration.text
+                    onAddTrack(name, duration)
+                    onDismiss()
+                }
+            ) {
+                Text("Add")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = trackName,
+                    onValueChange = { trackName = it },
+                    label = { Text("Track Name") },
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                OutlinedTextField(
+                    value = trackDuration,
+                    onValueChange = { trackDuration = it },
+                    label = { Text("Track Duration") }
+                )
+            }
+        }
+    )
 }

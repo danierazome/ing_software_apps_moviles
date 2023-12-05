@@ -11,6 +11,8 @@ import com.example.vinilos.data.model.album.Track
 import com.example.vinilos.data.network.models.network.AlbumNetwork
 import com.example.vinilos.data.network.models.network.CommentNetwork
 import com.example.vinilos.data.network.models.network.TrackNetwork
+import com.example.vinilos.data.model.album.TrackRequest
+import com.example.vinilos.data.network.models.network.AddTrackRequest
 
 
 fun AlbumNetwork.asEntity() = AlbumEntity(
@@ -52,7 +54,10 @@ fun TrackNetwork.asUIModel() = Track(
     name = name
 )
 
-
+fun AddTrackRequest.asUIModel() = TrackRequest(
+    name = duration,
+    duration = name
+)
 fun CommentNetwork.asUIModel() = Comment(
     id = id,
     description = description,
@@ -89,19 +94,21 @@ fun AlbumNetwork.asUIModel() = Album(
     description = description,
     genre = genre,
     recordLabel = recordLabel,
-    tracks = listOf(),
-    comments = listOf()
-)
-
-
-fun Album.asNetworkModel() = AlbumNetwork(
-    id = id,
-    name = name,
-    cover = cover,
-    releaseDate = releaseDate,
-    description = description,
-    genre = genre,
-    recordLabel = recordLabel,
-    tracks = listOf(),
     comments = listOf(),
+    tracks = listOf(),
 )
+
+
+fun com.example.vinilos.data.model.musician.Album.asNetworkModel(): AlbumNetwork {
+    return AlbumNetwork(
+        id = 0,
+        name = name,
+        cover = cover,
+        releaseDate = releaseDate,
+        description = description,
+        genre = genre,
+        recordLabel = recordLabel,
+        comments = listOf<CommentNetwork>(),
+        tracks =listOf<TrackNetwork>(),
+    )
+}
